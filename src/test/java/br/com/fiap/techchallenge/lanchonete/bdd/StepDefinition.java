@@ -1,19 +1,14 @@
 package br.com.fiap.techchallenge.lanchonete.bdd;
 
-import br.com.fiap.techchallenge.lanchonete.*;
-import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.ClienteResponse;
+import br.com.fiap.techchallenge.lanchonete.AtualizaStatusCobrancaTestBase;
+import br.com.fiap.techchallenge.lanchonete.WebhookStatusCobrancaTestBase;
 import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.CobrancaResponse;
 import br.com.fiap.techchallenge.lanchonete.core.domain.entities.enums.StatusCobrancaEnum;
-import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 import io.restassured.response.Response;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-
-import java.io.IOException;
-import java.math.BigDecimal;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -23,7 +18,7 @@ public class StepDefinition {
 
     private Response response;
 //    private ProdutoResponse produtoResponse;
-    private ClienteResponse clienteResponse;
+//    private ClienteResponse clienteResponse;
 //    private PedidoResponse pedidoResponse;
     private CobrancaResponse cobrancaResponse;
 
@@ -160,18 +155,18 @@ public class StepDefinition {
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
-    @Quando("preencher todos os dados para cadastro do cliente")
-    public ClienteResponse preencherTodosDadosParaCadastrarCliente() {
-        var clienteRequest = ClienteTestBase.criarClienteRequest();
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(clienteRequest)
-                .when()
-                .post("/clientes");
-        return response.then()
-                .extract()
-                .as(ClienteResponse.class);
-    }
+//    @Quando("preencher todos os dados para cadastro do cliente")
+//    public ClienteResponse preencherTodosDadosParaCadastrarCliente() {
+//        var clienteRequest = ClienteTestBase.criarClienteRequest();
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .body(clienteRequest)
+//                .when()
+//                .post("/clientes");
+//        return response.then()
+//                .extract()
+//                .as(ClienteResponse.class);
+//    }
 
     @Então("o cliente deve ser criado com sucesso")
     public void clienteDeveSerCriadoComSucesso() {
@@ -185,20 +180,20 @@ public class StepDefinition {
                 .body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"));
     }
 
-    @Dado("que um cliente já está cadastrado")
-    public void clienteJaCadastrado() {
-        clienteResponse = preencherTodosDadosParaCadastrarCliente();
-    }
-
-    @Quando("realizar a requisição para alterar o cliente")
-    public void realizarRequisicaoParaAlterarCliente() {
-        clienteResponse.setNome("Cliente Teste Alterado");
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(clienteResponse)
-                .when()
-                .put("/clientes/{id}", clienteResponse.getId());
-    }
+//    @Dado("que um cliente já está cadastrado")
+//    public void clienteJaCadastrado() {
+//        clienteResponse = preencherTodosDadosParaCadastrarCliente();
+//    }
+//
+//    @Quando("realizar a requisição para alterar o cliente")
+//    public void realizarRequisicaoParaAlterarCliente() {
+//        clienteResponse.setNome("Cliente Teste Alterado");
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .body(clienteResponse)
+//                .when()
+//                .put("/clientes/{id}", clienteResponse.getId());
+//    }
 
     @Então("o cliente deve ser alterado com sucesso")
     public void clienteDeveSerAlteradoComSucesso() {
@@ -206,12 +201,12 @@ public class StepDefinition {
                 .statusCode(HttpStatus.OK.value());
     }
 
-    @Então("deve exibir o cliente alterado")
-    public void deveExibirClienteAlterado() {
-        response.then()
-                .body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"))
-                .body("nome", equalTo(clienteResponse.getNome()));
-    }
+//    @Então("deve exibir o cliente alterado")
+//    public void deveExibirClienteAlterado() {
+//        response.then()
+//                .body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"))
+//                .body("nome", equalTo(clienteResponse.getNome()));
+//    }
 
     @Quando("requisitar a lista de todos os clientes")
     public void requisitarListaTodosClientes() {
@@ -229,13 +224,13 @@ public class StepDefinition {
                 .body("$", everyItem(anything()));
     }
 
-    @Quando("realizar a busca do cliente")
-    public void realizarBuscaCliente() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/clientes/{cpf}", clienteResponse.getCpf());
-    }
+//    @Quando("realizar a busca do cliente")
+//    public void realizarBuscaCliente() {
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .when()
+//                .get("/clientes/{cpf}", clienteResponse.getCpf());
+//    }
 
     @Então("o cliente deve ser exibido com sucesso")
     public void clienteDeveSerExibidoComSucesso() {

@@ -6,7 +6,6 @@ import br.com.fiap.techchallenge.lanchonete.core.ports.in.cliente.BuscaClientePo
 import br.com.fiap.techchallenge.lanchonete.core.ports.in.cliente.BuscaTodosClientesInputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.in.cliente.CadastraClienteInputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.in.cobranca.*;
-import br.com.fiap.techchallenge.lanchonete.core.ports.in.produto.*;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.cliente.AtualizaClienteOutputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.cliente.BuscaClienteOutputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.cliente.BuscaTodosClientesOutputPort;
@@ -14,54 +13,17 @@ import br.com.fiap.techchallenge.lanchonete.core.ports.out.cliente.CadastraClien
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.cobranca.*;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.pedido.AtualizaStatusPedidoOutputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.pedido.BuscarPedidoPorIdOutputPort;
-import br.com.fiap.techchallenge.lanchonete.core.ports.out.produto.*;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cliente.AtualizaClienteUseCase;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cliente.BuscaClientePorUseCase;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cliente.BuscaTodosClientesUseCase;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cliente.CadastraClienteUseCase;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cobranca.*;
-import br.com.fiap.techchallenge.lanchonete.core.usecases.produto.*;
 import com.squareup.okhttp.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CoreInjectionConfig {
-
-    @Bean
-    CriaProdutoInputPort criarProduto(CriaProdutoOutputPort criaProdutoOutputPort) {
-        return new CriaProdutoUseCase(criaProdutoOutputPort);
-    }
-
-    @Bean
-    AtualizaImagemProdutoInputPort criarImagemProduto(AtualizaImagemProdutoOutputPort atualizaImagemProdutoOutputPort) {
-        return new AtualizaImagemProdutoUseCase(atualizaImagemProdutoOutputPort);
-    }
-
-    @Bean
-    EditaProdutoInputPort editarProduto(EditaProdutoOutputPort editaProdutoOutputPort) {
-        return new EditaProdutoUseCase(editaProdutoOutputPort);
-    }
-
-    @Bean
-    RemoveProdutoInputPort removerProduto(RemoveProdutoOutputPort removeProdutoOutputPort) {
-        return new RemoveProdutoUseCase(removeProdutoOutputPort);
-    }
-
-    @Bean
-    BuscaProdutoPorIdInputPort buscarProdutoPorId(BuscaProdutoPorIdOutputPort buscaProdutoPorIdOutputPort) {
-        return new BuscaProdutoPorIdUseCase(buscaProdutoPorIdOutputPort);
-    }
-
-    @Bean
-    BuscaTodosProdutosInputPort buscarTodos(BuscaTodosProdutosOutputPort buscaProdutoPorIdOutputPort) {
-        return new BuscaTodosProdutosUseCase(buscaProdutoPorIdOutputPort);
-    }
-
-    @Bean
-    BuscaProdutoPorCategoriaInputPort buscarPorCategoria(BuscaProdutoPorCategoriaOutputPort buscaProdutoPorIdOutputPort) {
-        return new BuscaProdutoPorCategoriaUseCase(buscaProdutoPorIdOutputPort);
-    }
 
     @Bean
     AtualizaClienteInputPort atualizaCliente(AtualizaClienteOutputPort atualizaClienteOutputPort) {

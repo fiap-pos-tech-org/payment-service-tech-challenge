@@ -3,9 +3,7 @@ package br.com.fiap.techchallenge.lanchonete.bdd;
 import br.com.fiap.techchallenge.lanchonete.*;
 import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.ClienteResponse;
 import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.CobrancaResponse;
-import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.ProdutoResponse;
 import br.com.fiap.techchallenge.lanchonete.core.domain.entities.enums.StatusCobrancaEnum;
-import br.com.fiap.techchallenge.lanchonete.core.domain.entities.enums.StatusPedidoEnum;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -24,23 +22,23 @@ import static org.hamcrest.Matchers.*;
 public class StepDefinition {
 
     private Response response;
-    private ProdutoResponse produtoResponse;
+//    private ProdutoResponse produtoResponse;
     private ClienteResponse clienteResponse;
 //    private PedidoResponse pedidoResponse;
     private CobrancaResponse cobrancaResponse;
 
-    @Quando("preencher todos os dados para cadastro do produto")
-    public ProdutoResponse preencherTodosDadosParaCadastrarProduto() {
-        var produtoRequest = ProdutoTestBase.criarProdutoRequest();
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(produtoRequest)
-                .when()
-                .post("/produtos");
-        return response.then()
-                .extract()
-                .as(ProdutoResponse.class);
-    }
+//    @Quando("preencher todos os dados para cadastro do produto")
+//    public ProdutoResponse preencherTodosDadosParaCadastrarProduto() {
+//        var produtoRequest = ProdutoTestBase.criarProdutoRequest();
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .body(produtoRequest)
+//                .when()
+//                .post("/produtos");
+//        return response.then()
+//                .extract()
+//                .as(ProdutoResponse.class);
+//    }
 
     @Então("o produto deve ser criado com sucesso")
     public void produtoDeveSerCriadoComSucesso() {
@@ -48,30 +46,30 @@ public class StepDefinition {
                 .statusCode(HttpStatus.CREATED.value());
     }
 
-    @Então("deve exibir o produto cadastrado")
-    public void deveExibirProdutoCadastrado() {
-        var produtoRequest = ProdutoTestBase.criarProdutoRequest();
-        response.then()
-                .body(matchesJsonSchemaInClasspath("./schemas/ProdutoResponseSchema.json"))
-                .body("$", hasKey("id"))
-                .body("nome", equalTo(produtoRequest.getNome()))
-                .body("categoria", equalTo(produtoRequest.getCategoria().name()))
-                .body("preco", equalTo(produtoRequest.getPreco().floatValue()))
-                .body("descricao", equalTo(produtoRequest.getDescricao()));
-    }
-
-    @Dado("que um produto já está cadastrado")
-    public void produtoJaCadastrado() {
-        produtoResponse = preencherTodosDadosParaCadastrarProduto();
-    }
-
-    @Quando("realizar a busca do produto")
-    public void realizarBuscaProduto() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/produtos/{id}", produtoResponse.getId());
-    }
+//    @Então("deve exibir o produto cadastrado")
+//    public void deveExibirProdutoCadastrado() {
+//        var produtoRequest = ProdutoTestBase.criarProdutoRequest();
+//        response.then()
+//                .body(matchesJsonSchemaInClasspath("./schemas/ProdutoResponseSchema.json"))
+//                .body("$", hasKey("id"))
+//                .body("nome", equalTo(produtoRequest.getNome()))
+//                .body("categoria", equalTo(produtoRequest.getCategoria().name()))
+//                .body("preco", equalTo(produtoRequest.getPreco().floatValue()))
+//                .body("descricao", equalTo(produtoRequest.getDescricao()));
+//    }
+//
+//    @Dado("que um produto já está cadastrado")
+//    public void produtoJaCadastrado() {
+//        produtoResponse = preencherTodosDadosParaCadastrarProduto();
+//    }
+//
+//    @Quando("realizar a busca do produto")
+//    public void realizarBuscaProduto() {
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .when()
+//                .get("/produtos/{id}", produtoResponse.getId());
+//    }
 
     @Então("o produto deve ser exibido com sucesso")
     public void produtoDeveSerExibidoComSucesso() {
@@ -80,15 +78,15 @@ public class StepDefinition {
                 .body(matchesJsonSchemaInClasspath("./schemas/ProdutoResponseSchema.json"));
     }
 
-    @Quando("realizar a requisição para alterar o produto")
-    public void realizarRequisicaoParaAlterarProduto() {
-        produtoResponse.setPreco(BigDecimal.valueOf(12.99));
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(produtoResponse)
-                .when()
-                .put("/produtos/{id}", produtoResponse.getId());
-    }
+//    @Quando("realizar a requisição para alterar o produto")
+//    public void realizarRequisicaoParaAlterarProduto() {
+//        produtoResponse.setPreco(BigDecimal.valueOf(12.99));
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .body(produtoResponse)
+//                .when()
+//                .put("/produtos/{id}", produtoResponse.getId());
+//    }
 
     @Então("o produto deve ser alterado com sucesso")
     public void produtoDeveSerAlteradoComSucesso() {
@@ -96,21 +94,21 @@ public class StepDefinition {
                 .statusCode(HttpStatus.OK.value());
     }
 
-    @Então("deve exibir o produto alterado")
-    public void deveExibirProdutoAlterado() {
-        response.then()
-                .body(matchesJsonSchemaInClasspath("./schemas/ProdutoResponseSchema.json"))
-                .body("preco", equalTo(produtoResponse.getPreco().floatValue()));
-    }
-
-    @Quando("realizar a requisição para remover o produto")
-    public void realizarRequisicaoParaRemoverProduto() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(produtoResponse)
-                .when()
-                .delete("/produtos/{id}", produtoResponse.getId());
-    }
+//    @Então("deve exibir o produto alterado")
+//    public void deveExibirProdutoAlterado() {
+//        response.then()
+//                .body(matchesJsonSchemaInClasspath("./schemas/ProdutoResponseSchema.json"))
+//                .body("preco", equalTo(produtoResponse.getPreco().floatValue()));
+//    }
+//
+//    @Quando("realizar a requisição para remover o produto")
+//    public void realizarRequisicaoParaRemoverProduto() {
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .body(produtoResponse)
+//                .when()
+//                .delete("/produtos/{id}", produtoResponse.getId());
+//    }
 
     @Então("o produto deve ser removido com sucesso")
     public void produtoDeveSerRemovidoComSucesso() {
@@ -135,26 +133,26 @@ public class StepDefinition {
                 .body("$", everyItem(anything()));
     }
 
-    @Quando("realizar a busca do produto por categoria")
-    public void realizarBuscaProdutoPorCategoria() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/produtos/categoria/{categoria}", produtoResponse.getCategoria().name());
-    }
-
-    @Quando("realizar a requisição para alterar a imagem do produto")
-    public void realizarRequisicaoParaAlterarImagemProduto() {
-        try {
-            var imagem = new ClassPathResource("imagem_produto.jpg").getFile();
-            response = given()
-                    .multiPart("imagem", imagem)
-                    .when()
-                    .patch("/produtos/{id}", produtoResponse.getId());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Quando("realizar a busca do produto por categoria")
+//    public void realizarBuscaProdutoPorCategoria() {
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .when()
+//                .get("/produtos/categoria/{categoria}", produtoResponse.getCategoria().name());
+//    }
+//
+//    @Quando("realizar a requisição para alterar a imagem do produto")
+//    public void realizarRequisicaoParaAlterarImagemProduto() {
+//        try {
+//            var imagem = new ClassPathResource("imagem_produto.jpg").getFile();
+//            response = given()
+//                    .multiPart("imagem", imagem)
+//                    .when()
+//                    .patch("/produtos/{id}", produtoResponse.getId());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Então("a imagem do produto deve ser alterada com sucesso")
     public void imagemProdutoDeveSerAlteradaComSucesso() {

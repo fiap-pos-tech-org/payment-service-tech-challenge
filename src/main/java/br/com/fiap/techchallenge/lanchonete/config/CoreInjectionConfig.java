@@ -6,21 +6,20 @@ import br.com.fiap.techchallenge.lanchonete.core.ports.in.cliente.BuscaClientePo
 import br.com.fiap.techchallenge.lanchonete.core.ports.in.cliente.BuscaTodosClientesInputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.in.cliente.CadastraClienteInputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.in.cobranca.*;
-import br.com.fiap.techchallenge.lanchonete.core.ports.in.pedido.*;
 import br.com.fiap.techchallenge.lanchonete.core.ports.in.produto.*;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.cliente.AtualizaClienteOutputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.cliente.BuscaClienteOutputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.cliente.BuscaTodosClientesOutputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.cliente.CadastraClienteOutputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.cobranca.*;
-import br.com.fiap.techchallenge.lanchonete.core.ports.out.pedido.*;
+import br.com.fiap.techchallenge.lanchonete.core.ports.out.pedido.AtualizaStatusPedidoOutputPort;
+import br.com.fiap.techchallenge.lanchonete.core.ports.out.pedido.BuscarPedidoPorIdOutputPort;
 import br.com.fiap.techchallenge.lanchonete.core.ports.out.produto.*;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cliente.AtualizaClienteUseCase;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cliente.BuscaClientePorUseCase;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cliente.BuscaTodosClientesUseCase;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cliente.CadastraClienteUseCase;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.cobranca.*;
-import br.com.fiap.techchallenge.lanchonete.core.usecases.pedido.*;
 import br.com.fiap.techchallenge.lanchonete.core.usecases.produto.*;
 import com.squareup.okhttp.OkHttpClient;
 import org.springframework.context.annotation.Bean;
@@ -85,31 +84,7 @@ public class CoreInjectionConfig {
     }
 
     @Bean
-    CriaPedidoInputPort criarPedido(
-            CriaPedidoOutputPort criaPedidoOutputPort,
-            BuscaProdutoPorIdOutputPort buscaProdutoPorIdOutputPort,
-            BuscaClienteOutputPort buscaClienteOutputPort
-    ) {
-        return new CriaPedidoUseCase(criaPedidoOutputPort, buscaProdutoPorIdOutputPort, buscaClienteOutputPort);
-    }
-
-    @Bean
-    AtualizaStatusPedidoInputPort atualizaStatusPedido(AtualizaStatusPedidoOutputPort atualizaStatusPedidoOutputPort){
-        return new AtualizaStatusPedidoUseCase(atualizaStatusPedidoOutputPort);
-    }
-
-    @Bean
-    BuscarPedidoPorIdInputPort buscarPedidoPorId(BuscarPedidoPorIdOutputPort buscarPedidoPorIdOutputPort){
-        return new BuscarPedidoPorIdUseCase(buscarPedidoPorIdOutputPort);
-    }
-
-    @Bean
-    BuscaTodosPedidosInputPort buscarTodosPedidos(BuscaTodosPedidosOutputPort buscaTodosPedidosOutputPort) {
-        return new BuscaTodosPedidosUseCase(buscaTodosPedidosOutputPort);
-    }
-
-    @Bean
-    CriaQrCodeOutputPort criaQrCodeInputPort(){
+    CriaQrCodeOutputPort criaQrCodeInputPort() {
         return new PagamentoMock();
     }
 
@@ -122,6 +97,7 @@ public class CoreInjectionConfig {
     BuscaCobrancaPorPedidoIdInputPort buscarCobrancaPorPedidoId(BuscaCobrancaOutputPort buscaCobrancaOutputPort) {
         return new BuscaCobrancaPorPedidoIdUseCase(buscaCobrancaOutputPort);
     }
+
     @Bean
     CriaCobrancaInputPort criarCobranca(
             CriaCobrancaOutputPort criaCobrancaOutputPort,
@@ -151,18 +127,8 @@ public class CoreInjectionConfig {
     }
 
     @Bean
-    BuscaTodosPedidosPorStatusInputPort buscarPorStatus(BuscaTodosPedidosPorStatusOutputPort buscaTodosPedidosOutputPort) {
-        return new BuscaTodosPedidosPorStatusUseCase(buscaTodosPedidosOutputPort);
-    }
-
-    @Bean
     BuscaStatusPagamentoInputPort buscaStatusPagamento(BuscaStatusPagamentoOutputPort buscaStatusPagamentoOutputPort) {
         return new BuscaStatusPagamentoUseCase(buscaStatusPagamentoOutputPort);
-    }
-
-    @Bean
-    BuscaPedidosOrdenadosPorPrioridadeInputPort ordenaPorPrioridade(BuscaTodosPedidosOutputPort buscaTodosPedidosOutputPort) {
-        return new BuscaPedidosPorPrioridadeUseCase(buscaTodosPedidosOutputPort);
     }
 
     @Bean

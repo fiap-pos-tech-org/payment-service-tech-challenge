@@ -3,7 +3,6 @@ package br.com.fiap.techchallenge.lanchonete.bdd;
 import br.com.fiap.techchallenge.lanchonete.*;
 import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.ClienteResponse;
 import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.CobrancaResponse;
-import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.PedidoResponse;
 import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.ProdutoResponse;
 import br.com.fiap.techchallenge.lanchonete.core.domain.entities.enums.StatusCobrancaEnum;
 import br.com.fiap.techchallenge.lanchonete.core.domain.entities.enums.StatusPedidoEnum;
@@ -27,7 +26,7 @@ public class StepDefinition {
     private Response response;
     private ProdutoResponse produtoResponse;
     private ClienteResponse clienteResponse;
-    private PedidoResponse pedidoResponse;
+//    private PedidoResponse pedidoResponse;
     private CobrancaResponse cobrancaResponse;
 
     @Quando("preencher todos os dados para cadastro do produto")
@@ -247,18 +246,18 @@ public class StepDefinition {
                 .body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"));
     }
 
-    @Quando("preencher todos os dados para cadastro do pedido")
-    public PedidoResponse preencherTodosDadosParaCadastrarPedido() {
-        var pedidoRequest = PedidoTestBase.criarPedidoRequest(clienteResponse.getId(), produtoResponse.getId());
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(pedidoRequest)
-                .when()
-                .post("/pedidos");
-        return response.then()
-                .extract()
-                .as(PedidoResponse.class);
-    }
+//    @Quando("preencher todos os dados para cadastro do pedido")
+//    public PedidoResponse preencherTodosDadosParaCadastrarPedido() {
+//        var pedidoRequest = PedidoTestBase.criarPedidoRequest(clienteResponse.getId(), produtoResponse.getId());
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .body(pedidoRequest)
+//                .when()
+//                .post("/pedidos");
+//        return response.then()
+//                .extract()
+//                .as(PedidoResponse.class);
+//    }
 
     @Então("o pedido deve ser criado com sucesso")
     public void pedidoDeveSerCriadoComSucesso() {
@@ -272,18 +271,18 @@ public class StepDefinition {
                 .body(matchesJsonSchemaInClasspath("./schemas/PedidoResponseSchema.json"));
     }
 
-    @Dado("que um pedido já está cadastrado")
-    public void pedidoJaCadastrado() {
-        pedidoResponse = preencherTodosDadosParaCadastrarPedido();
-    }
-
-    @Quando("realizar a busca do pedido por Id")
-    public void realizarBuscaPedidoPorId() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/pedidos/{id}", pedidoResponse.getId());
-    }
+//    @Dado("que um pedido já está cadastrado")
+//    public void pedidoJaCadastrado() {
+//        pedidoResponse = preencherTodosDadosParaCadastrarPedido();
+//    }
+//
+//    @Quando("realizar a busca do pedido por Id")
+//    public void realizarBuscaPedidoPorId() {
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .when()
+//                .get("/pedidos/{id}", pedidoResponse.getId());
+//    }
 
     @Então("o pedido deve ser exibido com sucesso")
     public void pedidoDeveSerExibidoComSucesso() {
@@ -292,13 +291,13 @@ public class StepDefinition {
                 .body(matchesJsonSchemaInClasspath("./schemas/PedidoResponseSchema.json"));
     }
 
-    @Quando("realizar a busca do pedido por status")
-    public void realizarBuscaPedidoPorStatus() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/pedidos/status/{status}", pedidoResponse.getStatus().name());
-    }
+//    @Quando("realizar a busca do pedido por status")
+//    public void realizarBuscaPedidoPorStatus() {
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .when()
+//                .get("/pedidos/status/{status}", pedidoResponse.getStatus().name());
+//    }
 
     @Então("os pedidos devem ser exibidos com sucesso")
     public void pedidosDevemSerExibidosComSucesso() {
@@ -316,15 +315,15 @@ public class StepDefinition {
                 .get("/pedidos");
     }
 
-    @Quando("realizar a requisição para alterar o pedido")
-    public void realizarRequisicaoParaAlterarPedido() {
-        pedidoResponse.setStatus(StatusPedidoEnum.EM_PREPARACAO);
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(pedidoResponse)
-                .when()
-                .patch("/pedidos/{id}/status", pedidoResponse.getId());
-    }
+//    @Quando("realizar a requisição para alterar o pedido")
+//    public void realizarRequisicaoParaAlterarPedido() {
+//        pedidoResponse.setStatus(StatusPedidoEnum.EM_PREPARACAO);
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .body(pedidoResponse)
+//                .when()
+//                .patch("/pedidos/{id}/status", pedidoResponse.getId());
+//    }
 
     @Então("o pedido deve ser alterado com sucesso")
     public void pedidoDeveSerAlteradoComSucesso() {
@@ -333,39 +332,39 @@ public class StepDefinition {
                 .body(matchesJsonSchemaInClasspath("./schemas/PedidoResponseSchema.json"));
     }
 
-    @Dado("que um pedido já está no status em preparação")
-    public void pedidoJaNoStatusEmPreparacao() {
-        realizarRequisicaoParaAlterarPedido();
-    }
-
-    @Quando("realizar a busca do pedido na fila de preparação")
-    public void realizarBuscaPedidoFilaPreparacao() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/pedidos/fila-producao");
-    }
-
-    @Quando("realizar a busca da cobrança por pedido")
-    public void realizarBuscaCobrancaPorPedido() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/pedidos/{id}/cobranca", pedidoResponse.getId());
-    }
-
-    @Quando("preencher todos os dados para cadastro da cobrança")
-    public CobrancaResponse preencherTodosDadosParaCadastrarCobranca() {
-        var produtoRequest = CobrancaTestBase.criarCobrancaRequest(pedidoResponse.getId());
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(produtoRequest)
-                .when()
-                .post("/cobrancas");
-        return response.then()
-                .extract()
-                .as(CobrancaResponse.class);
-    }
+//    @Dado("que um pedido já está no status em preparação")
+//    public void pedidoJaNoStatusEmPreparacao() {
+//        realizarRequisicaoParaAlterarPedido();
+//    }
+//
+//    @Quando("realizar a busca do pedido na fila de preparação")
+//    public void realizarBuscaPedidoFilaPreparacao() {
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .when()
+//                .get("/pedidos/fila-producao");
+//    }
+//
+//    @Quando("realizar a busca da cobrança por pedido")
+//    public void realizarBuscaCobrancaPorPedido() {
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .when()
+//                .get("/pedidos/{id}/cobranca", pedidoResponse.getId());
+//    }
+//
+//    @Quando("preencher todos os dados para cadastro da cobrança")
+//    public CobrancaResponse preencherTodosDadosParaCadastrarCobranca() {
+//        var produtoRequest = CobrancaTestBase.criarCobrancaRequest(pedidoResponse.getId());
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .body(produtoRequest)
+//                .when()
+//                .post("/cobrancas");
+//        return response.then()
+//                .extract()
+//                .as(CobrancaResponse.class);
+//    }
 
     @Então("a cobrança deve ser criada com sucesso")
     public void cobrancaDeveSerCriadaComSucesso() {
@@ -379,18 +378,18 @@ public class StepDefinition {
                 .body(matchesJsonSchemaInClasspath("./schemas/CobrancaResponseSchema.json"));
     }
 
-    @Dado("que uma cobrança já está cadastrada")
-    public void cobrancaJaCadastrada() {
-        cobrancaResponse = preencherTodosDadosParaCadastrarCobranca();
-    }
-
-    @Quando("realizar a busca da cobrança")
-    public void realizarBuscaCobranca() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .get("/cobrancas/{id}", cobrancaResponse.getId());
-    }
+//    @Dado("que uma cobrança já está cadastrada")
+//    public void cobrancaJaCadastrada() {
+//        cobrancaResponse = preencherTodosDadosParaCadastrarCobranca();
+//    }
+//
+//    @Quando("realizar a busca da cobrança")
+//    public void realizarBuscaCobranca() {
+//        response = given()
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .when()
+//                .get("/cobrancas/{id}", cobrancaResponse.getId());
+//    }
 
     @Então("a cobrança deve ser exibida com sucesso")
     public void cobrancaDeveSerExibidaComSucesso() {

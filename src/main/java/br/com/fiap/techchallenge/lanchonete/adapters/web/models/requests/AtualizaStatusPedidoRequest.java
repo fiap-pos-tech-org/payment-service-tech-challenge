@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.lanchonete.adapters.web.models.requests;
 
-import br.com.fiap.techchallenge.lanchonete.core.dtos.AtualizaStatusPedidoDTO;
 import br.com.fiap.techchallenge.lanchonete.core.domain.entities.enums.StatusPedidoEnum;
 import jakarta.validation.constraints.NotNull;
 
@@ -23,9 +22,4 @@ public class AtualizaStatusPedidoRequest {
         this.status = status;
     }
 
-    public AtualizaStatusPedidoDTO toAtualizaStatusPedidoDTO() {
-        return new AtualizaStatusPedidoDTO(
-            status
-        );
-    }
 }

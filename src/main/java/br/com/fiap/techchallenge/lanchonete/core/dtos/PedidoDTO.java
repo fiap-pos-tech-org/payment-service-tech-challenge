@@ -1,7 +1,6 @@
 package br.com.fiap.techchallenge.lanchonete.core.dtos;
 
 import br.com.fiap.techchallenge.lanchonete.adapters.web.models.responses.PedidoResponse;
-import br.com.fiap.techchallenge.lanchonete.core.domain.entities.Pedido;
 import br.com.fiap.techchallenge.lanchonete.core.domain.entities.enums.StatusPedidoEnum;
 
 import java.math.BigDecimal;
@@ -18,17 +17,6 @@ public record PedidoDTO(
 ) {
     public String getNomeCliente() {
         return cliente != null ? cliente.nome() : null;
-    }
-
-    public PedidoDTO(Pedido pedido) {
-        this(
-                pedido.getId(),
-                pedido.getCliente() != null ? new ClienteDTO(pedido.getCliente()) : null,
-                pedido.getItens().stream().map(ItemPedidoDTO::new).toList(),
-                pedido.getStatus(),
-                pedido.getValorTotal(),
-                pedido.getDataCriacao()
-        );
     }
 
     public PedidoDTO(PedidoResponse pedidoResponse) {

@@ -89,15 +89,14 @@ public class CobrancaController extends ControllerBase {
             summary = "Atualiza o status de uma cobrança para Pago ou Recusado, baseado na requisição pelo serviço de webhook do MercadoPago"
     )
     @PutMapping(value = "/{id}/webhook-status")
-    ResponseEntity<?> updateWebhookStatus(
+    ResponseEntity<Object> updateWebhookStatus(
             @PathVariable("id") Long id,
             @Valid @RequestBody WebhookStatusCobrancaRequest request
     ) {
-
         ResponseEntity<Object> response = ResponseEntity.noContent().build();
 
         if (request.getAction().contains("created")) {
-            logger.info(String.format("Pagamento com id: %s criado\n", id));
+            logger.info("Pagamento com id: {} criado", id);
             return response;
         }
 

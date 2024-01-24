@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class PedidoRepository implements CriaPedidoOutputPort, AtualizaStatusPedidoOutputPort,
+public class PedidoRepository implements CriaPedidoOutputPort, /*AtualizaStatusPedidoOutputPort,*/
         BuscaTodosPedidosOutputPort, /*BuscarPedidoPorIdOutputPort,*/ BuscaTodosPedidosPorStatusOutputPort {
     private final PedidoMapper pedidoMapper;
     private final ClienteMapper clienteMapper;
@@ -42,7 +42,7 @@ public class PedidoRepository implements CriaPedidoOutputPort, AtualizaStatusPed
         return pedidoMapper.toPedidoDTO(pedidoSalvo);
     }
 
-    @Override
+//    @Override
     public PedidoDTO atualizarStatus(Long id, StatusPedidoEnum status) {
         var pedidoBuscado = buscarPedidoPorId(id);
         pedidoBuscado.setStatus(status);

@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "clienteNome": "Cliente 1 Atualizado Mock",
+  "itens": [
+    {
+      "produtoNome": "X-Tudo",
+      "produtoDescricao": "X-Tudo Monstrão",
+      "valorUnitario": 10.5,
+      "quantidade": 2,
+      "valorTotal": 21.0
+    }
+  ],
+  "status": "EM_PREPARACAO",
+  "valorTotal": 21.0,
+  "data": "2024-01-12T23:25:20"
+}

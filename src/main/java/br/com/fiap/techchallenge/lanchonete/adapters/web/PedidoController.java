@@ -85,7 +85,7 @@ public class PedidoController extends ControllerBase{
         return ResponseEntity.created(uri).body(pedidoResponse);
     }
 
-    @Operation(summary = "Atualiza status de um  pedido")
+    @Operation(summary = "Atualiza status de um pedido")
     @PatchMapping("/{id}/status")
     public ResponseEntity<PedidoResponse> atualizaStatus(@PathVariable("id") Long id,
                                                          @RequestBody AtualizaStatusPedidoRequest pedidoRequest){

@@ -1,6 +1,6 @@
 {
   "request" : {
-    "url" : "/pedidos/1",
+    "urlPattern" : "/pedidos/\\d+",
     "method" : "GET"
   },
   "response" : {

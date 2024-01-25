@@ -1,0 +1,6 @@
+{
+  "id": {{randomInt lower=1 upper=100}},
+  "nome": "Cliente 1 Mock",
+  "cpf": "94187479016",
+  "email": "cliente1mock@gmail.com"
+}

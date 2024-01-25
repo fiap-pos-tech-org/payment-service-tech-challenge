@@ -1,0 +1,7 @@
+{
+  "id": {{randomInt lower=1 upper=100}},
+  "nome": "HAMBURGER ANGUS Mock",
+  "categoria": "LANCHE",
+  "preco": 35.90,
+  "descricao": "Hamburger Angus 200mg de carne"
+}

@@ -1,11 +1,11 @@
 {
   "request" : {
-    "urlPattern": "/pedidos/\\d+/status",
-    "method" : "PATCH"
+    "url" : "/clientes",
+    "method" : "POST"
   },
   "response" : {
     "status" : 200, 
-    "bodyFileName" : "atualizar_status_pedido_status_200.json",
+    "bodyFileName" : "criar_cliente_status_200.json",
     "headers" : {
       "Content-Type" : "application/json; charset=UTF-8",
 	  "Access-Control-Allow-Origin": "*",

@@ -5,3 +5,4 @@ metadata:
 data:
   DB_HOST: 'mysql-service:3306/cobranca_db'
   MYSQL_DATABASE: cobranca_db
+  PEDIDOS_API_URL: 'http://localhost:8081/pedidos'

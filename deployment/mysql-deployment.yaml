@@ -39,10 +39,10 @@ spec:
                   name: secrets
                   key: mysql-root-password
           volumeMounts:
-            - mountPath: /servico-pagamento-volume
-              name: servico-pagamento-volume
+            - mountPath: /servico-cobranca-volume
+              name: servico-cobranca-volume
       volumes:
-        - name: servico-pagamento-volume
+        - name: servico-cobranca-volume
           hostPath:
-            path: /home/servico-pagamento-volume
+            path: /home/servico-cobranca-volume
             type: DirectoryOrCreate

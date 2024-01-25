@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: mysql-configmap
 data:
-  MYSQL_DATABASE: pagamento_db
+  MYSQL_DATABASE: cobranca_db
 

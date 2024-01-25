@@ -64,7 +64,7 @@ Siga as instruções abaixo para executar o projeto via docker/docker-compose:
     - Acesse a API pelo seu client de escolha pelo seguinte endereço base: `http://{IP_DO_SEU_CLUSTER}:30000`
     - Se você estiver utilizando o minikube obetenha a url da aplição através do comando:
     ```bash 
-        minikube service pagamento-service --url
+        minikube service cobranca-service --url
     ```
 
 ### Para rodar os testes do projeto execute os comandos abaixo:

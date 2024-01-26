@@ -49,11 +49,9 @@ jobs:
 
       - name: Run tests
         run: |
-          make docker-start-wiremock
           make docker-build
           make docker-start
           make system-test
-          make docker-stop-wiremock
           make docker-stop
 
   sonarqube-analysis:

@@ -22,7 +22,7 @@ docker-stop:
 	docker compose -f docker-compose.yml down
 
 sonar-analysis:
-	mvn -B verify sonar:sonar -Dsonar.login=$(SONAR_TOKEN)
+	mvn -B verify sonar:sonar -Dsonar.token=$(SONAR_TOKEN)
 
 docker-start-sonar:
 	docker compose -f docker-compose-sonar.yml up -d

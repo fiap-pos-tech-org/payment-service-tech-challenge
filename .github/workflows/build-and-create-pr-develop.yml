@@ -136,25 +136,63 @@ jobs:
 #      - name: Stop Wiremock
 #        run: make docker-stop-wiremock
 
-  test:
+#  test:
+#    runs-on: ubuntu-latest
+#    name: Set up WireMock as a standalone process
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Setup Java
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '17'
+#      - name: Action E2E Test
+#        uses: williamhaw/setup-wiremock-action@v0.1.2
+#        id: setup-wiremock
+#        with:
+#          http-port: '8081'
+#          mappings: './wiremock/mappings'
+#          files: './wiremock/__files'
+#          command: 'java -version'
+#          verbose: false
+#      - name: Get the WireMock standard output
+#        run: echo "${{ steps.setup-wiremock.outputs.wiremock-stdout }}"
+
+  system-tests:
+    name: System Tests
     runs-on: ubuntu-latest
-    name: Set up WireMock as a standalone process
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
-      - name: Setup Java
+
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
           java-version: '17'
-      - name: Action E2E Test
-        uses: williamhaw/setup-wiremock-action@v0.1.2
-        id: setup-wiremock
-        with:
-          http-port: '8081'
-          mappings: './wiremock/mappings'
-          files: './wiremock/__files'
-          command: 'java -version'
-          verbose: false
-      - name: Get the WireMock standard output
-        run: echo "${{ steps.setup-wiremock.outputs.wiremock-stdout }}"
+          distribution: 'temurin'
+
+      - name: Start Wiremock
+        run: make docker-start-wiremock
+
+      - name: Wait for WireMock to be ready
+        run: |
+          until curl -sSf "http://localhost:8080/__admin" >/dev/null; do
+            echo "Waiting for WireMock to be ready..."
+            sleep 10
+          done
+
+      - name: Debug
+        run: docker ps
+
+      - name: Check WireMock Logs
+        run: docker compose -f docker-compose-wiremock.yml logs
+
+      - name: Teste
+        run: |
+          RESPONSE=$(curl -sSf http://localhost:8080/__admin)
+          echo "WireMock Response: $RESPONSE"
+
+      - name: Stop Wiremock
+        run: make docker-stop-wiremock

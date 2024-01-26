@@ -37,6 +37,8 @@ services:
 
   mock:
     image: wiremock/wiremock
+    hostname: mock
+    container_name: mock
     ports:
       - "8081:8080"
     networks:

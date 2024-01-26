@@ -16,10 +16,10 @@ docker-build:
 	docker build -t tech-challenge:local -f ./Dockerfile .
 
 docker-start:
-	docker compose -f docker-compose.yml up -d
+	docker compose up -d
 
 docker-stop:
-	docker compose -f docker-compose.yml down
+	docker compose down
 
 sonar-analysis:
 	mvn clean verify sonar:sonar -Dsonar.host.url=$(SONARQUBE_URL) -Dsonar.login=admin -Dsonar.password=admin
@@ -29,3 +29,9 @@ docker-start-sonar:
 
 docker-stop-sonar:
 	docker compose -f docker-compose-sonar.yml down
+
+docker-start-wiremock:
+	docker compose -f docker-compose-wiremock.yml up -d
+
+docker-stop-wiremock:
+	docker compose -f docker-compose-wiremock.yml down

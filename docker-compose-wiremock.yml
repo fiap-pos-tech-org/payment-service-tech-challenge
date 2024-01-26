@@ -10,8 +10,3 @@ services:
       - ./wiremock/mappings:/home/wiremock/mappings
       - ./wiremock/logs:/home/wiremock/logs
     command: --global-response-templating
-
-volumes:
-  ./wiremock/__files:
-  ./wiremock/mappings:
-  ./wiremock/logs:

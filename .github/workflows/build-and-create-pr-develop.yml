@@ -56,8 +56,20 @@ jobs:
         run: |
           until curl -sSf "http://localhost:8081/__admin" >/dev/null; do
             echo "Waiting for WireMock to be ready..."
-            sleep 10
+            sleep 15
           done
+
+      - name: Debug
+        run: |
+          docker compose -f docker-compose-wiremock.yml ps
+          docker compose ps
+
+      - name: Check WireMock Logs
+        run: |
+          docker compose -f docker-compose-wiremock.yml logs
+
+      - name: Wait before running tests
+        run: sleep 20
 
       - name: Run tests
         run: |

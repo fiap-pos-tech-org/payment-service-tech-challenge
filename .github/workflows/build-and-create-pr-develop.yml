@@ -151,7 +151,7 @@ jobs:
         uses: williamhaw/setup-wiremock-action@v0.1.2
         id: setup-wiremock
         with:
-          http-port: '8080'
+          http-port: '8081'
           mappings: './wiremock/mappings'
           files: './wiremock/__files'
           command: 'java -version'

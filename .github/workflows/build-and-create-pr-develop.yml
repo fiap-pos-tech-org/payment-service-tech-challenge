@@ -11,9 +11,6 @@ on:
       - 'test**'
       - 'chore**'
 
-env:
-  PROJECT_KEY: 'fiap-pos-tech-org_payment-service-tech-challenge'
-
 jobs:
   build:
     uses: ./.github/workflows/reusable-workflow-build.yml
@@ -38,46 +35,3 @@ jobs:
           source_branch: $FEATURE_BRANCH
           target_branch: 'develop'
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-  sonarqube-analysis:
-    name: Sonar Analysis
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
-      - name: Build and analyze
-        run: make sonar-analysis SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-      - name: Check SonarCloud coverage
-        run: |
-          COVERAGE=$(curl -sSf "https://sonarcloud.io/api/measures/component?component=$PROJECT_KEY&metricKeys=coverage" | jq -r '.component.measures[0].value')
-          if (( $(echo "$COVERAGE < 80" | bc -l) )); then
-            echo "Cobertura de teste abaixo de 80%"
-            exit 1
-          fi

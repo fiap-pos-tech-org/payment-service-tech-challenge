@@ -154,6 +154,7 @@ jobs:
           http-port: '8081'
           mappings: './wiremock/mappings'
           files: './wiremock/__files'
+          command: 'mvn test'
           verbose: false
       - name: Get the WireMock standard output
         run: echo "${{ steps.setup-wiremock.outputs.wiremock-stdout }}"

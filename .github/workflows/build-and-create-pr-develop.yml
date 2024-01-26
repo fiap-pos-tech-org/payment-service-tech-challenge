@@ -11,6 +11,9 @@ on:
       - 'test**'
       - 'chore**'
 
+env:
+  PROJECT_KEY: 'fiap-pos-tech-org_payment-service-tech-challenge'
+
 jobs:
   build:
     uses: ./.github/workflows/reusable-workflow-build.yml
@@ -39,6 +42,9 @@ jobs:
   sonarqube-analysis:
     name: Sonar Analysis
     runs-on: ubuntu-latest
+    needs:
+      - tests
+      - system-tests
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -73,7 +79,7 @@ jobs:
 
       - name: Check SonarCloud coverage
         run: |
-          COVERAGE=$(curl -sSf "https://sonarcloud.io/api/measures/component?component=fiap-pos-tech-org_payment-service-tech-challenge&metricKeys=coverage" | jq -r '.component.measures[0].value')
+          COVERAGE=$(curl -sSf "https://sonarcloud.io/api/measures/component?component=$PROJECT_KEY&metricKeys=coverage" | jq -r '.component.measures[0].value')
           if (( $(echo "$COVERAGE < 80" | bc -l) )); then
             echo "Cobertura de teste abaixo de 80%"
             exit 1

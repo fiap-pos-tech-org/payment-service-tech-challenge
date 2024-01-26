@@ -32,7 +32,7 @@ public class StepDefinition {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(produtoRequest)
                 .when()
-                .post("http://mock:8081/produtos");
+                .post("http://localhost:8081/produtos");
         return response.then()
                 .extract()
                 .as(ProdutoResponse.class);
@@ -50,7 +50,7 @@ public class StepDefinition {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteRequest)
                 .when()
-                .post("http://mock:8081/clientes");
+                .post("http://localhost:8081/clientes");
         return response.then()
                 .extract()
                 .as(ClienteResponse.class);
@@ -68,7 +68,7 @@ public class StepDefinition {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(pedidoRequest)
                 .when()
-                .post("http://mock:8081/pedidos");
+                .post("http://localhost:8081/pedidos");
         return response.then()
                 .extract()
                 .as(PedidoResponse.class);

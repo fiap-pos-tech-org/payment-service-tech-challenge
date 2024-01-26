@@ -49,9 +49,23 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Start Wiremock
+        run: make docker-start-wiremock
+
+      - name: Wait for WireMock to be ready
+        run: |
+          until curl -sSf "http://localhost:8081/__admin" >/dev/null; do
+            echo "Waiting for WireMock to be ready..."
+            sleep 10
+          done
+
       - name: Run tests
         run: |
           make docker-build
           make docker-start
           make system-test
+
+      - name: Stop Wiremock and App
+        run: |
+          make docker-stop-wiremock
           make docker-stop

@@ -92,6 +92,12 @@ jobs:
   system-tests:
     name: System Tests
     runs-on: ubuntu-latest
+    services:
+      mock:
+        image: wiremock/wiremock
+        ports:
+          - 8081:8080
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

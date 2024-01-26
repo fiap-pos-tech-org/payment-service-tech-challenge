@@ -96,7 +96,12 @@ jobs:
       mock:
         image: wiremock/wiremock
         ports:
-          - 8081:8080
+          - "8081:8080"
+        volumes:
+          - ./wiremock/__files:/home/wiremock/__files
+          - ./wiremock/mappings:/home/wiremock/mappings
+          - ./wiremock/logs:/home/wiremock/logs
+        command: --global-response-templating
 
     steps:
       - name: Checkout code
@@ -108,8 +113,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Start Wiremock
-        run: make docker-start-wiremock
+#      - name: Start Wiremock
+#        run: make docker-start-wiremock
 
       - name: Wait for WireMock to be ready
         run: |
@@ -129,5 +134,5 @@ jobs:
           RESPONSE=$(curl -sSf http://localhost:8081/__admin)
           echo "WireMock Response: $RESPONSE"
 
-      - name: Stop Wiremock
-        run: make docker-stop-wiremock
+#      - name: Stop Wiremock
+#        run: make docker-stop-wiremock

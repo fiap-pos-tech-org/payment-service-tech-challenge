@@ -59,6 +59,11 @@ jobs:
             sleep 15
           done
 
+      - name: Teste
+        run: |
+          RESPONSE=$(curl -sSf http://localhost:8081/__admin)
+          echo "WireMock Response: $RESPONSE"
+
       - name: Start App
         run: |
           make docker-build

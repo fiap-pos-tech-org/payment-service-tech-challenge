@@ -14,15 +14,15 @@ import org.springframework.stereotype.Service;
 public class StatusPagamento extends GatewayBase implements BuscaStatusPagamentoOutputPort {
 
     private final OkHttpClient httpClient;
+    private final String urlMercadoPagoApiPagamentos;
+    private final String token;
 
-    @Value("${mercadopago.api.url}")
-    private String urlMercadoPagoApiPagamentos;
-
-    @Value("${mercadopago.api.token}")
-    private String token;
-
-    public StatusPagamento(OkHttpClient httpClient) {
+    public StatusPagamento(OkHttpClient httpClient,
+                           @Value("${mercadopago.api.url}") String urlMercadoPagoApiPagamentos,
+                           @Value("${mercadopago.api.token}") String token) {
         this.httpClient = httpClient;
+        this.urlMercadoPagoApiPagamentos = urlMercadoPagoApiPagamentos;
+        this.token = token;
     }
 
     @Override

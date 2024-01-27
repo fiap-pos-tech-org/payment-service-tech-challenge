@@ -1,11 +1,11 @@
-package br.com.fiap.techchallenge.servicocobranca;
+package br.com.fiap.techchallenge.servicocobranca.utils;
 
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.AtualizaStatusCobrancaRequest;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
 
-public class AtualizaStatusCobrancaTestBase {
+public class AtualizaStatusCobrancaHelper {
 
-    private AtualizaStatusCobrancaTestBase() {
+    private AtualizaStatusCobrancaHelper() {
     }
 
     public static AtualizaStatusCobrancaRequest criarAtualizaStatusCobrancaRequest(StatusCobrancaEnum statusCobrancaEnum) {

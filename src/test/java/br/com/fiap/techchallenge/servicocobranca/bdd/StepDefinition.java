@@ -1,11 +1,11 @@
 package br.com.fiap.techchallenge.servicocobranca.bdd;
 
-import br.com.fiap.techchallenge.servicocobranca.*;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.ClienteResponse;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.CobrancaResponse;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.PedidoResponse;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.ProdutoResponse;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
+import br.com.fiap.techchallenge.servicocobranca.utils.*;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -27,7 +27,7 @@ public class StepDefinition {
 
     @Quando("preencher todos os dados para cadastro do produto")
     public ProdutoResponse preencherTodosDadosParaCadastrarProduto() {
-        var produtoRequest = ProdutoTestBase.criarProdutoRequest();
+        var produtoRequest = ProdutoHelper.criarProdutoRequest();
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(produtoRequest)
@@ -45,7 +45,7 @@ public class StepDefinition {
 
     @Quando("preencher todos os dados para cadastro do cliente")
     public ClienteResponse preencherTodosDadosParaCadastrarCliente() {
-        var clienteRequest = ClienteTestBase.criarClienteRequest();
+        var clienteRequest = ClienteHelper.criarClienteRequest();
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteRequest)
@@ -63,7 +63,7 @@ public class StepDefinition {
 
     @Quando("preencher todos os dados para cadastro do pedido")
     public PedidoResponse preencherTodosDadosParaCadastrarPedido() {
-        var pedidoRequest = PedidoTestBase.criarPedidoRequest(clienteResponse.getId(), produtoResponse.getId());
+        var pedidoRequest = PedidoHelper.criarPedidoRequest(clienteResponse.getId(), produtoResponse.getId());
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(pedidoRequest)
@@ -89,7 +89,7 @@ public class StepDefinition {
 
     @Quando("preencher todos os dados para cadastro da cobrança")
     public CobrancaResponse preencherTodosDadosParaCadastrarCobranca() {
-        var cobrancaRequest = CobrancaTestBase.criarCobrancaRequest(pedidoResponse.getId());
+        var cobrancaRequest = CobrancaHelper.criarCobrancaRequest(pedidoResponse.getId());
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(cobrancaRequest)
@@ -134,7 +134,7 @@ public class StepDefinition {
 
     @Quando("realizar a requisição para alterar a cobrança")
     public void realizarRequisicaoParaAlterarCobranca() {
-        var atualizaStatusCobrancaRequest = AtualizaStatusCobrancaTestBase
+        var atualizaStatusCobrancaRequest = AtualizaStatusCobrancaHelper
                 .criarAtualizaStatusCobrancaRequest(StatusCobrancaEnum.PAGO);
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -158,7 +158,7 @@ public class StepDefinition {
 
     @Quando("realizar a requisição para alterar a cobrança no Mercado Pago")
     public void realizarRequisicaoParaAlterarCobrancaMercadoPago() {
-        var webhookStatusCobrancaRequest = WebhookStatusCobrancaTestBase
+        var webhookStatusCobrancaRequest = WebhookStatusCobrancaHelper
                 .criarWebhookStatusCobrancaRequest("approved", 1L);
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

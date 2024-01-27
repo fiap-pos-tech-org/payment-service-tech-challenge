@@ -1,13 +1,13 @@
-package br.com.fiap.techchallenge.servicocobranca;
+package br.com.fiap.techchallenge.servicocobranca.utils;
 
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.ProdutoRequest;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.CategoriaEnum;
 
 import java.math.BigDecimal;
 
-public class ProdutoTestBase {
+public class ProdutoHelper {
 
-    private ProdutoTestBase() {
+    private ProdutoHelper() {
     }
 
     public static ProdutoRequest criarProdutoRequest() {

@@ -12,6 +12,15 @@ public class StatusPedidoMercadoPago {
     private String status;
     private List<Pagamento> payments;
 
+    public StatusPedidoMercadoPago() {
+    }
+
+    public StatusPedidoMercadoPago(Long id, String status, List<Pagamento> payments) {
+        this.id = id;
+        this.status = status;
+        this.payments = payments;
+    }
+
     public Long getId() {
         return id;
     }

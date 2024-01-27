@@ -29,9 +29,3 @@ docker-start-sonar:
 
 docker-stop-sonar:
 	docker compose -f docker-compose-sonar.yml down
-
-docker-start-wiremock:
-	docker compose -f docker-compose-wiremock.yml up -d
-
-docker-stop-wiremock:
-	docker compose -f docker-compose-wiremock.yml down

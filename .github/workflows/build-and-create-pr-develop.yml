@@ -12,77 +12,26 @@ on:
       - 'chore**'
 
 jobs:
-#  build:
-#    uses: ./.github/workflows/reusable-workflow-build.yml
-#
-#  create_pull_request:
-#    name: Create Pull Request to Develop
-#    runs-on: ubuntu-latest
-#    permissions:
-#      contents: write
-#      pull-requests: write
-#      repository-projects: write
-#    needs: build
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v3
-#
-#      - name: Get feature branch name
-#        run: echo "FEATURE_BRANCH=$(echo ${{ github.ref }} | sed 's/refs\/heads\///')" >> $GITHUB_ENV
-#
-#      - uses: ./.github/actions/create-pull-request
-#        with:
-#          source_branch: $FEATURE_BRANCH
-#          target_branch: 'develop'
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
+  build:
+    uses: ./.github/workflows/reusable-workflow-build.yml
 
-  system-tests:
-    name: System Tests
+  create_pull_request:
+    name: Create Pull Request to Develop
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      - name: Get feature branch name
+        run: echo "FEATURE_BRANCH=$(echo ${{ github.ref }} | sed 's/refs\/heads\///')" >> $GITHUB_ENV
+
+      - uses: ./.github/actions/create-pull-request
         with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Start Wiremock
-        run: make docker-start-wiremock
-
-      - name: Wait for WireMock to be ready
-        run: |
-          until curl -sSf "http://127.0.0.1:8081/__admin" >/dev/null; do
-            echo "Waiting for WireMock to be ready..."
-            sleep 10
-          done
-
-      - name: Start App
-        run: |
-          make docker-build
-          make docker-start
-
-      - name: Debug
-        run: docker ps
-
-      - name: Check WireMock Logs
-        run: |
-          docker compose -f docker-compose-wiremock.yml logs
-
-      - name: Wait before running tests
-        run: sleep 20
-
-      - name: Teste
-        run: |
-          RESPONSE=$(curl -sSf http://127.0.0.1:8081/__admin)
-          echo "WireMock Response: $RESPONSE"
-
-      - name: Run tests
-        run: make system-test
-
-      - name: Stop Wiremock and App
-        run: |
-          make docker-stop-wiremock
-          make docker-stop
+          source_branch: $FEATURE_BRANCH
+          target_branch: 'develop'
+          github_token: ${{ secrets.GITHUB_TOKEN }}

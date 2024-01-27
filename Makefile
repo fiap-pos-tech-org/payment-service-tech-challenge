@@ -22,7 +22,7 @@ docker-stop:
 	docker compose -f docker-compose.yml down
 
 sonar-analysis:
-	mvn clean verify sonar:sonar -Dsonar.host.url=$(SONARQUBE_URL) -Dsonar.login=admin -Dsonar.password=admin
+	mvn -B verify sonar:sonar -Dsonar.token=$(SONAR_TOKEN)
 
 docker-start-sonar:
 	docker compose -f docker-compose-sonar.yml up -d

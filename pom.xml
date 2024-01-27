@@ -28,8 +28,9 @@
 		<allure.report.version>2.4.1</allure.report.version>
 		<maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
 		<sonar.version>3.4.0.905</sonar.version>
-		<sonar.projectKey>${project.artifactId}</sonar.projectKey>
-		<sonar.projectName>${project.name}</sonar.projectName>
+		<sonar.organization>fiap-pos-tech-org</sonar.organization>
+		<sonar.projectKey>fiap-pos-tech-org_payment-service-tech-challenge</sonar.projectKey>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>

@@ -23,9 +23,3 @@ docker-stop:
 
 sonar-analysis:
 	mvn -B verify sonar:sonar -Dsonar.token=$(SONAR_TOKEN)
-
-docker-start-sonar:
-	docker compose -f docker-compose-sonar.yml up -d
-
-docker-stop-sonar:
-	docker compose -f docker-compose-sonar.yml down

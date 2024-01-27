@@ -16,10 +16,10 @@ docker-build:
 	docker build -t tech-challenge:local -f ./Dockerfile .
 
 docker-start:
-	docker compose -f docker-compose.yml up -d
+	docker compose up -d
 
 docker-stop:
-	docker compose -f docker-compose.yml down
+	docker compose down
 
 sonar-analysis:
 	mvn -B verify sonar:sonar -Dsonar.token=$(SONAR_TOKEN)

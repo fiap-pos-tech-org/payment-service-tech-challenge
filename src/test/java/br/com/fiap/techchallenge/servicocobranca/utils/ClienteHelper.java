@@ -1,14 +1,16 @@
-package br.com.fiap.techchallenge.servicocobranca;
+package br.com.fiap.techchallenge.servicocobranca.utils;
 
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.ClienteRequest;
+import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.ClienteResponse;
+import br.com.fiap.techchallenge.servicocobranca.core.dtos.ClienteDTO;
 
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class ClienteTestBase {
+public class ClienteHelper {
 
-    private ClienteTestBase() {
+    private ClienteHelper() {
     }
 
     public static ClienteRequest criarClienteRequest() {
@@ -47,6 +49,18 @@ public class ClienteTestBase {
         }
         int resto = soma % 11;
         return (resto < 2) ? 0 : (11 - resto);
+    }
+
+    public static ClienteDTO criaClienteDTO() {
+        return new ClienteDTO(1L, "cliente1", "56312729036", "cliente1@email.com");
+    }
+
+    public static ClienteResponse criaClienteResponse() {
+        return new ClienteResponse(1L, "cliente1", "56312729036", "cliente1@email.com");
+    }
+
+    public static ClienteRequest criaClienteRequest() {
+        return new ClienteRequest("cliente1", "56312729036", "cliente1@email.com");
     }
 
 }

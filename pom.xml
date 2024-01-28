@@ -24,13 +24,26 @@
 		<rest-assured.version>5.3.1</rest-assured.version>
 		<cucumber.version>7.15.0</cucumber.version>
 		<junit.version>1.9.3</junit.version>
-		<allure.version>2.23.0</allure.version>
+		<allure.version>2.12.0</allure.version>
 		<allure.report.version>2.4.1</allure.report.version>
 		<maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
 		<sonar.version>3.4.0.905</sonar.version>
 		<sonar.organization>fiap-pos-tech-org</sonar.organization>
 		<sonar.projectKey>fiap-pos-tech-org_payment-service-tech-challenge</sonar.projectKey>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.exclusions>
+			**/adapters/repository/models/*,
+			**/adapters/repository/jpa/*,
+			**/adapters/web/handlers/*,
+			**/adapters/web/models/**/*,
+			**/core/domain/entities/**/*,
+			**/core/domain/exceptions/*,
+			**/core/ports/**/*,
+			**/core/dtos/*,
+			**/ServicoCobrancaApplication.*,
+			**/config/*
+		</sonar.exclusions>
+		<jacoco.version>0.8.11</jacoco.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -149,6 +162,12 @@
 			<artifactId>allure-rest-assured</artifactId>
 			<version>${allure.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>${jacoco.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -211,6 +230,39 @@
 					<reportVersion>${allure.report.version}</reportVersion>
 					<resultsDirectory>${project.build.directory}/allure-results/</resultsDirectory>
 					<reportDirectory>${project.build.directory}/allure-report</reportDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<exclude>br/com/fiap/techchallenge/servicocobranca/adapters/repository/models/</exclude>
+						<exclude>br/com/fiap/techchallenge/servicocobranca/adapters/repository/jpa</exclude>
+						<exclude>br/com/fiap/techchallenge/servicocobranca/adapters/web/handlers/</exclude>
+						<exclude>br/com/fiap/techchallenge/servicocobranca/adapters/web/models/</exclude>
+						<exclude>br/com/fiap/techchallenge/servicocobranca/core/domain/entities/</exclude>
+						<exclude>br/com/fiap/techchallenge/servicocobranca/core/domain/exceptions/</exclude>
+						<exclude>br/com/fiap/techchallenge/servicocobranca/core/ports</exclude>
+						<exclude>br/com/fiap/techchallenge/servicocobranca/core/**/*DTO.*</exclude>
+						<exclude>br/com/fiap/techchallenge/servicocobranca/ServicoCobrancaApplication.*</exclude>
+						<exclude>**/config/*</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

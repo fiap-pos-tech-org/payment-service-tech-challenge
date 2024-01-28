@@ -20,13 +20,12 @@ public class PedidoGateway extends GatewayBase implements BuscarPedidoPorIdOutpu
 
     private final OkHttpClient httpClient;
     private final PedidoMapper pedidoMapper;
+    private final String urlApiPedidos;
 
-    @Value("${pedidos.api.url}")
-    private String urlApiPedidos;
-
-    public PedidoGateway(OkHttpClient httpClient, PedidoMapper pedidoMapper) {
+    public PedidoGateway(OkHttpClient httpClient, PedidoMapper pedidoMapper, @Value("${pedidos.api.url}") String urlApiPedidos) {
         this.httpClient = httpClient;
         this.pedidoMapper = pedidoMapper;
+        this.urlApiPedidos = urlApiPedidos;
     }
 
     @Override

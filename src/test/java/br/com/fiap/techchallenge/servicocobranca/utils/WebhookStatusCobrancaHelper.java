@@ -1,11 +1,11 @@
-package br.com.fiap.techchallenge.servicocobranca;
+package br.com.fiap.techchallenge.servicocobranca.utils;
 
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.WebhookDataRequest;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.WebhookStatusCobrancaRequest;
 
-public class WebhookStatusCobrancaTestBase {
+public class WebhookStatusCobrancaHelper {
 
-    private WebhookStatusCobrancaTestBase() {
+    private WebhookStatusCobrancaHelper() {
     }
 
     public static WebhookStatusCobrancaRequest criarWebhookStatusCobrancaRequest(String action, Long id) {

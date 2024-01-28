@@ -1,10 +1,8 @@
-# Sistema de Controle de Pedidos para Lanchonete
+# Sistema de Controle de Cobrança para Lanchonete
 
-Este projeto é um sistema de controle de pedidos para uma lanchonete. Ele possui as seguintes funcionalidades:
+Este projeto é um sistema de controle de cobrança para uma lanchonete. Ele possui as seguintes funcionalidades:
 
-- Cadastro e gerenciamento de clientes
-- Cadastro e gerenciamento de produtos
-- Criação, atualização e acompanhamento de pedidos
+- Criação, consulta e consulta por pedido de uma cobrança
 - Integração com meios de pagamento
 
 ## Rotas disponíveis na API
@@ -27,8 +25,8 @@ Podemos encontrar a imagem do projeto no seguinte repositório do Docker hub [vw
 
 Siga as instruções abaixo para executar o projeto via docker/docker-compose:
 
-1. Faça o clone deste repositório: `https://github.com/fiap-pos/tech-challenge.git`
-2. Acesse o diretório do projeto: `cd tech-challenge`
+1. Faça o clone deste repositório: `https://github.com/fiap-pos-tech-org/payment-service-tech-challenge.git`
+2. Acesse o diretório do projeto: `cd payment-service-tech-challenge`
 3. Execute o comando para iniciar o ambiente Docker: `docker-compose up -d`
 4. Aguarde até que os containers estejam prontos e em execução.
 5. Acesse a API pelo seu client de escolha pelo seguinte endereço base: `http://localhost:8080`
@@ -38,7 +36,7 @@ Siga as instruções abaixo para executar o projeto via docker/docker-compose:
 1. Certifique-se de ter o Java 17 instalado em sua máquina.
 2. Acesse o diretório do projeto: 
     ```bash 
-        cd tech-challenge
+        cd payment-service-tech-challenge
     ```
 3. Execute o comando para buildar o projeto: 
     ```bash
@@ -66,7 +64,7 @@ Siga as instruções abaixo para executar o projeto via docker/docker-compose:
     - Acesse a API pelo seu client de escolha pelo seguinte endereço base: `http://{IP_DO_SEU_CLUSTER}:30000`
     - Se você estiver utilizando o minikube obetenha a url da aplição através do comando:
     ```bash 
-        minikube service lanchonete-service --url
+        minikube service cobranca-service --url
     ```
 
 ### Para rodar os testes do projeto execute os comandos abaixo:
@@ -86,6 +84,20 @@ Siga as instruções abaixo para executar o projeto via docker/docker-compose:
 4. Testes de sistema filtrando por tags:
     ```bash
         mvn test -P system-test -Dcucumber.filter.tags="@smoke"
+    ```
+
+### Para verificar a cobertura dos testes no ambiente local execute os comandos abaixo:
+
+1. Jacoco:
+    ```bash
+        mvn test
+        mvn jacoco:report
+    ```
+
+2. Sonar local:
+    ```bash
+        docker compose -f docker-compose-local.yml up -d
+        mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=sonar
     ```
 
 ## Contribuidores

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servico-cobranca
+  labels:
+    app: servico-cobranca
+spec:
+  template:
+    metadata:
+      name: servico-cobranca
+      labels:
+        app: servico-cobranca
+    spec:
+      containers:
+        - name: servico-cobranca
+          image: vwnunes/tech-challenge-61:latest
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: ${DB_HOSTNAME}
+            - name: DB_USER
+              value: ${DB_USERNAME}
+            - name: DB_PASS
+              value: ${DB_PASSWORD}
+          volumeMounts:
+            - mountPath: /servico-cobranca-volume
+              name: servico-cobranca-volume
+      volumes:
+        - name: servico-cobranca-volume
+          hostPath:
+            path: /home/servico-cobranca-volume
+            type: DirectoryOrCreate
+  replicas: 2
+  selector:
+    matchLabels:
+      app: servico-cobranca

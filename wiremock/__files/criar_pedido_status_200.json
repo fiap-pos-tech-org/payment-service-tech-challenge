@@ -1,0 +1,16 @@
+{
+  "id": {{randomInt lower=1 upper=1000}},
+  "clienteNome": "Cliente Pedido Mock",
+  "itens": [
+    {
+      "produtoNome": "HAMBURGER ANGUS",
+      "produtoDescricao": "Hamburger Angus 200mg de carne",
+      "valorUnitario": 35.9,
+      "quantidade": 2,
+      "valorTotal": 71.8
+    }
+  ],
+  "status": "PENDENTE_DE_PAGAMENTO",
+  "valorTotal": 71.8,
+  "data": "2024-01-24T10:50:45.7548646"
+}

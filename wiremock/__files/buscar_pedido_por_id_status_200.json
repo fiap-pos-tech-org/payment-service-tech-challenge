@@ -1,0 +1,16 @@
+{
+  "id": {{randomInt lower=1 upper=100}},
+  "clienteNome": "Cliente Mock",
+  "itens": [
+    {
+      "produtoNome": "X-Tudo",
+      "produtoDescricao": "X-Tudo Monstrão",
+      "valorUnitario": 10.5,
+      "quantidade": 1,
+      "valorTotal": 10.5
+    }
+  ],
+  "status": "PENDENTE_DE_PAGAMENTO",
+  "valorTotal": 10.5,
+  "data": "2024-01-18T10:02:55"
+}

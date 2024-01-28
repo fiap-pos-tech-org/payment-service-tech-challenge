@@ -29,6 +29,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Coverage
+        run: make coverage
+
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:

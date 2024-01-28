@@ -25,4 +25,4 @@ coverage:
 	mvn test
 
 sonar-analysis:
-	mvn -B verify sonar:sonar -Dsonar.token=$(SONAR_TOKEN) -Pcoverage
+	mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.token=$(SONAR_TOKEN) -Pcoverage

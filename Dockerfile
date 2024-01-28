@@ -7,10 +7,10 @@ RUN mvn clean package
 FROM eclipse-temurin:17.0.7_7-jre-focal@sha256:901eeb64e3d1e74d261e82e4158386407b95628eaf723058fb96d4efb9141b88
 RUN mkdir /app
 RUN apt-get update && apt-get install -y dumb-init
-COPY --from=build /app/target/servico-cobranca-*.jar /app/java-application.jar
+COPY --from=build /app/target/payment-service-tech-challenge-*.jar /app/java-application.jar
 WORKDIR /app
-RUN addgroup --system servico-cobranca-app && useradd -r servico-cobranca-app -g servico-cobranca-app
-RUN chown -R servico-cobranca-app:servico-cobranca-app /app
-USER servico-cobranca-app
+RUN addgroup --system payment-service-tech-challenge-app && useradd -r payment-service-tech-challenge-app -g payment-service-tech-challenge-app
+RUN chown -R payment-service-tech-challenge-app:payment-service-tech-challenge-app /app
+USER payment-service-tech-challenge-app
 EXPOSE 8080
 CMD "dumb-init" "java" "-jar" "java-application.jar"

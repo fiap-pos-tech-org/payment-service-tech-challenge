@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: us-east-1
   EKS_CLUSTER: eks-tech-challenge
-  PROJECT_KEY: 'fiap-pos-tech-org_payment-service-tech-challenge'
+  PROJECT_KEY: fiap-pos-tech-org_payment-service-tech-challenge
 
 jobs:
   sonar-analysis:
@@ -48,6 +48,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Check SonarCloud coverage
+        run: |
+          COVERAGE=$(curl -sSf "https://sonarcloud.io/api/measures/component?component=$PROJECT_KEY&metricKeys=coverage" | jq -r '.component.measures[0].value')
+          if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+            echo "Cobertura de teste abaixo de 80%"
+            exit 1
+          fi
 
   deploy:
     runs-on: ubuntu-latest

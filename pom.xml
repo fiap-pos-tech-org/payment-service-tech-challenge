@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.fiap.techchallenge</groupId>
-	<artifactId>servico-cobranca</artifactId>
+	<artifactId>payment-service-tech-challenge</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>servico-cobranca</name>
+	<name>payment-service-tech-challenge</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>

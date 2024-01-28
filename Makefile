@@ -21,8 +21,5 @@ docker-start:
 docker-stop:
 	docker compose down
 
-coverage:
-	mvn test
-
 sonar-analysis:
 	mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.token=$(SONAR_TOKEN) -Pcoverage

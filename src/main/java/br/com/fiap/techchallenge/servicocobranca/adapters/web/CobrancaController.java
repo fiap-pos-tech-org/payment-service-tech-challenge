@@ -8,6 +8,7 @@ import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.C
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.StatusPagamentoDTO;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -58,7 +59,7 @@ public class CobrancaController extends ControllerBase {
 
     @Operation(summary = "Busca uma Cobrança por id")
     @GetMapping(value = "/{id}")
-    ResponseEntity<CobrancaResponse> get(@PathVariable("id") Long id) {
+    ResponseEntity<CobrancaResponse> get(@Parameter(example = "1") @PathVariable("id") Long id) {
         var cobrancaOut = buscaCobrancaPorIdInputPort.buscarPorId(id);
         var cobrancaResponse = cobrancaMapper.toCobrancaResponse(cobrancaOut);
         return ResponseEntity.ok().body(cobrancaResponse);
@@ -66,9 +67,7 @@ public class CobrancaController extends ControllerBase {
 
     @Operation(summary = "Busca cobrança pelo id do pedido")
     @GetMapping(value = "/{id}/pedido")
-    ResponseEntity<CobrancaResponse> buscarCobrancaPorPedidoId(
-            @PathVariable("id") Long id
-    ) {
+    ResponseEntity<CobrancaResponse> buscarCobrancaPorPedidoId(@Parameter(example = "1") @PathVariable("id") Long id) {
         var cobrancaOut = buscaCobrancaPorPedidoIdInputPort.buscarPorPedidoId(id);
         var cobrancaResponse = cobrancaMapper.toCobrancaResponse(cobrancaOut);
         return ResponseEntity.ok().body(cobrancaResponse);
@@ -77,7 +76,7 @@ public class CobrancaController extends ControllerBase {
     @Operation(summary = "Atualiza o status de uma cobrança para Pago ou Cancelado")
     @PutMapping(value = "/{id}/status")
     ResponseEntity<CobrancaResponse> updateStatus(
-            @PathVariable("id") Long id,
+            @Parameter(example = "1") @PathVariable("id") Long id,
             @Valid @RequestBody AtualizaStatusCobrancaRequest atualizaStatusCobrancaRequest
     ) {
         var cobrancaOut = atualizaStatusCobrancaInputPort.atualizarStatus(id, atualizaStatusCobrancaRequest.toAtualizaStatusCobrancaDTO());
@@ -90,7 +89,7 @@ public class CobrancaController extends ControllerBase {
     )
     @PutMapping(value = "/{id}/webhook-status")
     ResponseEntity<Object> updateWebhookStatus(
-            @PathVariable("id") Long id,
+            @Parameter(example = "1") @PathVariable("id") Long id,
             @Valid @RequestBody WebhookStatusCobrancaRequest request
     ) {
         ResponseEntity<Object> response = ResponseEntity.noContent().build();

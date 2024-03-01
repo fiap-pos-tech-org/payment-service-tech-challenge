@@ -22,7 +22,7 @@ public class OpenAPIConfig {
                 .description("URL do ambiente de desenvolvimento");
 
         var info = new Info()
-                .title("API de gerenciamento de pedidos")
+                .title("API de gerenciamento de cobrança")
                 .version("1.0")
                 .description("Esta API expõe endpoints para gerenciar o sistema de cobrança de uma lanchonete do Tech Challenge");
 

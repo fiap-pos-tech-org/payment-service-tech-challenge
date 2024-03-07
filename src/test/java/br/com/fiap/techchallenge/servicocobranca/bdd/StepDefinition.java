@@ -7,7 +7,6 @@ import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.P
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
 import br.com.fiap.techchallenge.servicocobranca.utils.AtualizaStatusCobrancaHelper;
 import br.com.fiap.techchallenge.servicocobranca.utils.CobrancaHelper;
-import br.com.fiap.techchallenge.servicocobranca.utils.PedidoHelper;
 import br.com.fiap.techchallenge.servicocobranca.utils.WebhookStatusCobrancaHelper;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
@@ -52,22 +51,16 @@ public class StepDefinition {
                 .as(ClienteResponse.class);
     }
 
-    @Quando("preencher todos os dados para cadastro do pedido")
-    public PedidoResponse preencherTodosDadosParaCadastrarPedido() {
-        var pedidoRequest = PedidoHelper.criarPedidoRequest(clienteResponse.getId(), produtoResponse.getId());
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(pedidoRequest)
-                .when()
-                .post("http://localhost:8081/pedidos");
-        return response.then()
-                .extract()
-                .as(PedidoResponse.class);
-    }
-
     @Dado("que um pedido já está cadastrado")
     public void pedidoJaCadastrado() {
-        pedidoResponse = preencherTodosDadosParaCadastrarPedido();
+        response = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("http://localhost:8081/pedidos/1");
+
+        pedidoResponse = response.then()
+                .extract()
+                .as(PedidoResponse.class);
     }
 
     @Quando("realizar a busca da cobrança por pedido")

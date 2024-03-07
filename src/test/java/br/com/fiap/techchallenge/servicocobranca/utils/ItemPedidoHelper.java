@@ -12,13 +12,9 @@ public class ItemPedidoHelper {
     private ItemPedidoHelper() {
     }
 
-    public static ItemPedidoDTO criaItemPedidoDTO() {
-        var produto = ProdutoHelper.criarProdutoRequest();
-        return new ItemPedidoDTO(1L, produto.getNome(), produto.getDescricao(), BigDecimal.valueOf(1L), 1);
-    }
-
     public static List<ItemPedidoDTO> criaListaItemPedidoDTO() {
-        return List.of(criaItemPedidoDTO());
+        var itemPedidoDTO = new ItemPedidoDTO(1L, "X-Tudo", "X-Tudo Monstrão", BigDecimal.valueOf(1L), 1);
+        return List.of(itemPedidoDTO);
     }
 
     public static List<ItemPedidoRequest> criaListaItemPedidoRequest() {

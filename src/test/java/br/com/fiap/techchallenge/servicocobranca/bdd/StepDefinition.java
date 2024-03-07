@@ -5,7 +5,10 @@ import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.C
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.PedidoResponse;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.ProdutoResponse;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
-import br.com.fiap.techchallenge.servicocobranca.utils.*;
+import br.com.fiap.techchallenge.servicocobranca.utils.AtualizaStatusCobrancaHelper;
+import br.com.fiap.techchallenge.servicocobranca.utils.CobrancaHelper;
+import br.com.fiap.techchallenge.servicocobranca.utils.PedidoHelper;
+import br.com.fiap.techchallenge.servicocobranca.utils.WebhookStatusCobrancaHelper;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -25,22 +28,16 @@ public class StepDefinition {
     private PedidoResponse pedidoResponse;
     private CobrancaResponse cobrancaResponse;
 
-    @Quando("preencher todos os dados para cadastro do produto")
-    public ProdutoResponse preencherTodosDadosParaCadastrarProduto() {
-        var produtoRequest = ProdutoHelper.criarProdutoRequest();
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(produtoRequest)
-                .when()
-                .post("http://localhost:8081/produtos");
-        return response.then()
-                .extract()
-                .as(ProdutoResponse.class);
-    }
-
     @Dado("que um produto já está cadastrado")
     public void produtoJaCadastrado() {
-        produtoResponse = preencherTodosDadosParaCadastrarProduto();
+        response = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("http://localhost:8081/produtos/1");
+
+        produtoResponse = response.then()
+                .extract()
+                .as(ProdutoResponse.class);
     }
 
     @Dado("que um cliente já está cadastrado")

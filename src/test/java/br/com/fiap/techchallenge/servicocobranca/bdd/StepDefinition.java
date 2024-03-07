@@ -43,22 +43,16 @@ public class StepDefinition {
         produtoResponse = preencherTodosDadosParaCadastrarProduto();
     }
 
-    @Quando("preencher todos os dados para cadastro do cliente")
-    public ClienteResponse preencherTodosDadosParaCadastrarCliente() {
-        var clienteRequest = ClienteHelper.criarClienteRequest();
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(clienteRequest)
-                .when()
-                .post("http://localhost:8081/clientes");
-        return response.then()
-                .extract()
-                .as(ClienteResponse.class);
-    }
-
     @Dado("que um cliente já está cadastrado")
     public void clienteJaCadastrado() {
-        clienteResponse = preencherTodosDadosParaCadastrarCliente();
+        response = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("http://localhost:8081/clientes/1");
+
+        clienteResponse = response.then()
+                .extract()
+                .as(ClienteResponse.class);
     }
 
     @Quando("preencher todos os dados para cadastro do pedido")

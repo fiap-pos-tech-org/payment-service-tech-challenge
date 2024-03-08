@@ -5,7 +5,9 @@ import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.C
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.PedidoResponse;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.ProdutoResponse;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
-import br.com.fiap.techchallenge.servicocobranca.utils.*;
+import br.com.fiap.techchallenge.servicocobranca.utils.AtualizaStatusCobrancaHelper;
+import br.com.fiap.techchallenge.servicocobranca.utils.CobrancaHelper;
+import br.com.fiap.techchallenge.servicocobranca.utils.WebhookStatusCobrancaHelper;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -25,58 +27,40 @@ public class StepDefinition {
     private PedidoResponse pedidoResponse;
     private CobrancaResponse cobrancaResponse;
 
-    @Quando("preencher todos os dados para cadastro do produto")
-    public ProdutoResponse preencherTodosDadosParaCadastrarProduto() {
-        var produtoRequest = ProdutoHelper.criarProdutoRequest();
+    @Dado("que um produto já está cadastrado")
+    public void produtoJaCadastrado() {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(produtoRequest)
                 .when()
-                .post("http://localhost:8081/produtos");
-        return response.then()
+                .get("http://localhost:8081/produtos/1");
+
+        produtoResponse = response.then()
                 .extract()
                 .as(ProdutoResponse.class);
     }
 
-    @Dado("que um produto já está cadastrado")
-    public void produtoJaCadastrado() {
-        produtoResponse = preencherTodosDadosParaCadastrarProduto();
-    }
-
-    @Quando("preencher todos os dados para cadastro do cliente")
-    public ClienteResponse preencherTodosDadosParaCadastrarCliente() {
-        var clienteRequest = ClienteHelper.criarClienteRequest();
+    @Dado("que um cliente já está cadastrado")
+    public void clienteJaCadastrado() {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(clienteRequest)
                 .when()
-                .post("http://localhost:8081/clientes");
-        return response.then()
+                .get("http://localhost:8081/clientes/1");
+
+        clienteResponse = response.then()
                 .extract()
                 .as(ClienteResponse.class);
     }
 
-    @Dado("que um cliente já está cadastrado")
-    public void clienteJaCadastrado() {
-        clienteResponse = preencherTodosDadosParaCadastrarCliente();
-    }
-
-    @Quando("preencher todos os dados para cadastro do pedido")
-    public PedidoResponse preencherTodosDadosParaCadastrarPedido() {
-        var pedidoRequest = PedidoHelper.criarPedidoRequest(clienteResponse.getId(), produtoResponse.getId());
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(pedidoRequest)
-                .when()
-                .post("http://localhost:8081/pedidos");
-        return response.then()
-                .extract()
-                .as(PedidoResponse.class);
-    }
-
     @Dado("que um pedido já está cadastrado")
     public void pedidoJaCadastrado() {
-        pedidoResponse = preencherTodosDadosParaCadastrarPedido();
+        response = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("http://localhost:8081/pedidos/1");
+
+        pedidoResponse = response.then()
+                .extract()
+                .as(PedidoResponse.class);
     }
 
     @Quando("realizar a busca da cobrança por pedido")

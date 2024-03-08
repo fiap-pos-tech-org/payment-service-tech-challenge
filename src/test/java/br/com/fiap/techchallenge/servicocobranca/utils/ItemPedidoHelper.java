@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.servicocobranca.utils;
 
-import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.ItemPedidoRequest;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.ItemPedidoResponse;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.ItemPedidoDTO;
 
@@ -12,17 +11,9 @@ public class ItemPedidoHelper {
     private ItemPedidoHelper() {
     }
 
-    public static ItemPedidoDTO criaItemPedidoDTO() {
-        var produto = ProdutoHelper.criarProdutoRequest();
-        return new ItemPedidoDTO(1L, produto.getNome(), produto.getDescricao(), BigDecimal.valueOf(1L), 1);
-    }
-
     public static List<ItemPedidoDTO> criaListaItemPedidoDTO() {
-        return List.of(criaItemPedidoDTO());
-    }
-
-    public static List<ItemPedidoRequest> criaListaItemPedidoRequest() {
-        return List.of(new ItemPedidoRequest(1L, 1));
+        var itemPedidoDTO = new ItemPedidoDTO(1L, "X-Tudo", "X-Tudo Monstrão", BigDecimal.valueOf(1L), 1);
+        return List.of(itemPedidoDTO);
     }
 
     public static List<ItemPedidoResponse> criaListaItemPedidoResponse() {

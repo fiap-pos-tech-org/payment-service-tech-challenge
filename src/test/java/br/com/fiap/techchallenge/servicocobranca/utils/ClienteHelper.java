@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.servicocobranca.utils;
 
-import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.ClienteRequest;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.ClienteResponse;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.ClienteDTO;
 
@@ -13,12 +12,15 @@ public class ClienteHelper {
     private ClienteHelper() {
     }
 
-    public static ClienteRequest criarClienteRequest() {
-        var clienteRequest = new ClienteRequest();
-        clienteRequest.setNome("Cliente Teste");
-        clienteRequest.setCpf(gerarCPF());
-        clienteRequest.setEmail(gerarEmail());
-        return clienteRequest;
+    public static ClienteDTO criaClienteDTO() {
+        return new ClienteDTO(1L, "cliente1", gerarCPF(), gerarEmail(), "(34) 99988-7766",
+                EnderecoHelper.criaEnderecoDTO());
+    }
+
+    public static ClienteResponse criaClienteResponse() {
+        var clienteDTO = criaClienteDTO();
+        return new ClienteResponse(clienteDTO.id(), clienteDTO.nome(), gerarCPF(), gerarEmail(), clienteDTO.telefone(),
+                EnderecoHelper.criaEnderecoResponse());
     }
 
     private static String gerarEmail() {
@@ -49,18 +51,6 @@ public class ClienteHelper {
         }
         int resto = soma % 11;
         return (resto < 2) ? 0 : (11 - resto);
-    }
-
-    public static ClienteDTO criaClienteDTO() {
-        return new ClienteDTO(1L, "cliente1", "56312729036", "cliente1@email.com");
-    }
-
-    public static ClienteResponse criaClienteResponse() {
-        return new ClienteResponse(1L, "cliente1", "56312729036", "cliente1@email.com");
-    }
-
-    public static ClienteRequest criaClienteRequest() {
-        return new ClienteRequest("cliente1", "56312729036", "cliente1@email.com");
     }
 
 }

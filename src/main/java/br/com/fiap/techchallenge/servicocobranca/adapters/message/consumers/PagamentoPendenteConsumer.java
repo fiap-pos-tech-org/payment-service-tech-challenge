@@ -5,7 +5,6 @@ import br.com.fiap.techchallenge.servicocobranca.core.dtos.MensagemPedidoPagamen
 import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.CriaCobrancaInputPort;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.jms.annotation.JmsListener;
@@ -26,7 +25,6 @@ public class PagamentoPendenteConsumer {
         this.mapper = mapper;
     }
 
-    @Transactional
     @JmsListener(destination = "${aws.sqs.fila-pagamento-pendente}")
     public void receiveMessage(@Payload String mensagem) {
         logger.info("mensagem recebida do serviço pedido: {}", mensagem);

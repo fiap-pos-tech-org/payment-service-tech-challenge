@@ -19,7 +19,7 @@ Antes de executar o projeto, verifique se você possui os seguintes requisitos:
 
 ## Imagem Docker do projeto
 
-Podemos encontrar a imagem do projeto no seguinte repositório do Docker hub [vwnunes/tech-challenge-61](https://hub.docker.com/repository/docker/vwnunes/tech-challenge-61/general)
+Podemos encontrar a imagem do projeto no seguinte repositório do Docker hub [geter/cobranca-techchallenge38](https://hub.docker.com/repository/docker/geter/techchallenge38/general)
 
 ## Executando o Projeto
 

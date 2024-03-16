@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: servico-cobranca
-          image: vwnunes/tech-challenge-61:latest
+          image: geter/cobranca-techchallenge38:latest
           imagePullPolicy: "Always"
           ports:
             - containerPort: 8080

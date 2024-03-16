@@ -24,6 +24,14 @@ spec:
               value: ${DB_USERNAME}
             - name: DB_PASS
               value: ${DB_PASSWORD}
+            - name: TOPICO_PAGAMENTO_RETORNO_ARN
+              value: ${TOPICO_PAGAMENTO_RETORNO_ARN}
+            - name: FILA_PAGAMENTO_PENDENTE
+              value: ${FILA_PAGAMENTO_PENDENTE}
+            - name: GROUP_ID
+              value: ${GROUP_ID}
+            - name: ENV
+              value: ${ENV}
           volumeMounts:
             - mountPath: /servico-cobranca-volume
               name: servico-cobranca-volume
@@ -32,6 +40,7 @@ spec:
           hostPath:
             path: /home/servico-cobranca-volume
             type: DirectoryOrCreate
+      serviceAccountName: cobranca-serviceaccount
   replicas: 2
   selector:
     matchLabels:

@@ -30,4 +30,12 @@ public enum StatusPedidoEnum {
                 .orElseThrow(() -> new IllegalArgumentException("Status permitidos: " + Stream.of(values()).toList()));
     }
 
+    public static StatusPedidoEnum getStatusPedido(StatusCobrancaEnum statusCobranca) {
+        return switch(statusCobranca) {
+            case PAGO -> StatusPedidoEnum.RECEBIDO;
+            case CANCELADO, RECUSADO -> StatusPedidoEnum.CANCELADO;
+            default -> null;
+        };
+    }
+
 }

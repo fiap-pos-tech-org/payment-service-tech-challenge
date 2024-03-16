@@ -5,7 +5,6 @@ import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.Co
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.WebhookDataRequest;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.WebhookStatusCobrancaRequest;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.CobrancaResponse;
-import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.QrCode;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.CobrancaDTO;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.StatusPagamentoDTO;
@@ -30,7 +29,7 @@ public class CobrancaHelper {
     }
 
     public static CobrancaDTO criaCobrancaDTO() {
-        return new CobrancaDTO(1L, 1L, BigDecimal.valueOf(1), StatusCobrancaEnum.PENDENTE, new QrCode("1234"));
+        return new CobrancaDTO(1L, 1L, BigDecimal.valueOf(1), StatusCobrancaEnum.PENDENTE, "1234");
     }
 
     public static CobrancaResponse criaCobrancaResponse() {
@@ -40,7 +39,7 @@ public class CobrancaHelper {
                 cobrancaDTO.pedidoId(),
                 cobrancaDTO.status(),
                 cobrancaDTO.valor(),
-                cobrancaDTO.qrCode()
+                cobrancaDTO.qrCodeBase64()
         );
     }
 

@@ -1,18 +1,18 @@
 package br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests;
 
-import br.com.fiap.techchallenge.servicocobranca.core.dtos.CriaCobrancaDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
-public class CobrancaRequest {
+public class MercadoPagoRequest {
 
     @Schema(example = "1")
     @NotNull(message = "O campo pedidoId é obrigatório")
     private Long pedidoId;
 
-    public CobrancaRequest() {}
+    public MercadoPagoRequest() {
+    }
 
-    public CobrancaRequest(Long pedidoId) {
+    public MercadoPagoRequest(Long pedidoId) {
         this.pedidoId = pedidoId;
     }
 

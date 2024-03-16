@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.servicocobranca.adapters.gateways;
+package br.com.fiap.techchallenge.servicocobranca.adapters.gateways.pedido;
 
 import br.com.fiap.techchallenge.servicocobranca.adapters.repository.mappers.PedidoMapper;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.PedidoResponse;

@@ -7,8 +7,8 @@ import br.com.fiap.techchallenge.servicocobranca.core.domain.exceptions.NotFound
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ExceptionsHandler {
-    Logger logger = LoggerFactory.getLogger(ExceptionsHandler.class);
+    Logger logger = LogManager.getLogger(ExceptionsHandler.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

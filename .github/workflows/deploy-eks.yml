@@ -96,5 +96,4 @@ jobs:
           DB_PASS: ${{ secrets.DB_PASS }}
           TOPICO_PAGAMENTO_RETORNO_ARN: ${{ vars.TOPICO_PAGAMENTO_RETORNO_ARN }}
           FILA_PAGAMENTO_PENDENTE: ${{vars.FILA_PAGAMENTO_PENDENTE}}
-          GROUP_ID: ${{ vars.GROUP_ID }}
           ENV: ${{ vars.ENV }}

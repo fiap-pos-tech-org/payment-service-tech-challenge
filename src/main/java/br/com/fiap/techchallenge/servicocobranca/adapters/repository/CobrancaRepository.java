@@ -9,11 +9,8 @@ import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.PublicaP
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.AtualizaStatusCobrancaOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.BuscaCobrancaOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.CriaCobrancaOutputPort;
-import br.com.fiap.techchallenge.servicocobranca.core.ports.out.pedido.BuscarPedidoPorIdOutputPort;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
 
 @Repository
 public class CobrancaRepository implements CriaCobrancaOutputPort, BuscaCobrancaOutputPort, AtualizaStatusCobrancaOutputPort {
@@ -64,10 +61,9 @@ public class CobrancaRepository implements CriaCobrancaOutputPort, BuscaCobranca
         var cobrancaSalva = cobrancaJpaRepository.save(cobranca);
 
         var statusPedidoEnum = StatusPedidoEnum.getStatusPedido(cobrancaStatusIn.status());
-        var mensagem = new MensagemPedidoProducaoDTO(
+        var mensagem = new MensagemPagamentoPedidoDTO(
                 cobrancaSalva.getPedidoId(),
-                statusPedidoEnum,
-                new ArrayList<>()
+                statusPedidoEnum
         );
         publicaPagamentoRetornoInputPort.publicar(mensagem, topicoPagamentoRetornoArn);
 

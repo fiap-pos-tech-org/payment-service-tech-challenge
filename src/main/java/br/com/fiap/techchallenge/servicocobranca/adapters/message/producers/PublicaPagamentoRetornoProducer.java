@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.PublishRequest;
@@ -15,9 +14,6 @@ import software.amazon.awssdk.services.sns.model.PublishRequest;
 public class PublicaPagamentoRetornoProducer implements PublicaPagamentoRetornoOutputPort {
 
     private final Logger logger = LogManager.getLogger(PublicaPagamentoRetornoProducer.class);
-
-    @Value("${aws.sns.group-id}")
-    private String messageGroupId;
 
     private final SnsClient snsClient;
     private final ObjectMapper mapper;

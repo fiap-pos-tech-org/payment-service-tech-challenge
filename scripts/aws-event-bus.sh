@@ -20,7 +20,7 @@ awslocal sns subscribe --topic-arn "arn:aws:sns:us-east-1:000000000000:topico_pa
 
 awslocal sns subscribe --topic-arn "arn:aws:sns:us-east-1:000000000000:topico_pagamento_retorno" \
   --protocol sqs --notification-endpoint "arn:aws:sqs:us-east-1:000000000000:fila_pagamento_aprovado" \
-  --attributes '{"RawMessageDelivery": "true", "FilterPolicy":"{\"status\":[\"PAGO\"]}", "FilterPolicyScope":"MessageBody"}' && \
+  --attributes '{"RawMessageDelivery": "true", "FilterPolicy":"{\"status\":[\"RECEBIDO\"]}", "FilterPolicyScope":"MessageBody"}' && \
 
 awslocal sns subscribe --topic-arn "arn:aws:sns:us-east-1:000000000000:topico_pagamento_retorno" \
   --protocol sqs --notification-endpoint "arn:aws:sqs:us-east-1:000000000000:fila_pagamento_recusado" \

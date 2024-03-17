@@ -1,7 +1,10 @@
 package br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MercadoPagoResponse {
 
+    @JsonProperty("point_of_interaction")
     private PontoInteracaoMercadoPagoResponse pontoInteracaoMercadoPagoResponse;
 
     public MercadoPagoResponse() {

@@ -43,7 +43,7 @@ public class MercadoPagoGatewayMock extends GatewayBase implements CriaCobrancaM
         var requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
         var request = new Request.Builder()
                 .url(urlApiMercadoPago)
-                .patch(requestBody)
+                .post(requestBody)
                 .build();
 
         var mercadoPagoResponse = newCall(request, MercadoPagoResponse.class);

@@ -15,6 +15,9 @@ public class PropertySourceResolver {
     @Value("${pedidos.api.url}")
     private String urlApiPedidos;
 
+    @Value("${mercadopago.pagamento.api.url}")
+    private String urlApiMercadoPago;
+
     public String getUrlMercadoPagoApiPagamentos() {
         return urlMercadoPagoApiPagamentos;
     }
@@ -25,5 +28,9 @@ public class PropertySourceResolver {
 
     public String getUrlApiPedidos() {
         return urlApiPedidos;
+    }
+
+    public String getUrlApiMercadoPago() {
+        return urlApiMercadoPago;
     }
 }

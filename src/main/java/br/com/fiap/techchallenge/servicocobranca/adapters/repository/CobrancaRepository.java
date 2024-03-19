@@ -2,23 +2,33 @@ package br.com.fiap.techchallenge.servicocobranca.adapters.repository;
 
 import br.com.fiap.techchallenge.servicocobranca.adapters.repository.jpa.CobrancaJpaRepository;
 import br.com.fiap.techchallenge.servicocobranca.adapters.repository.mappers.CobrancaMapper;
+import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusPedidoEnum;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.exceptions.EntityNotFoundException;
-import br.com.fiap.techchallenge.servicocobranca.core.dtos.CobrancaDTO;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.AtualizaStatusCobrancaDTO;
+import br.com.fiap.techchallenge.servicocobranca.core.dtos.CobrancaDTO;
+import br.com.fiap.techchallenge.servicocobranca.core.dtos.MensagemPagamentoPedidoDTO;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.PublicaPagamentoRetornoInputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.AtualizaStatusCobrancaOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.BuscaCobrancaOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.CriaCobrancaOutputPort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class CobrancaRepository implements CriaCobrancaOutputPort, BuscaCobrancaOutputPort, AtualizaStatusCobrancaOutputPort {
 
+    @Value("${aws.sns.topico-pagamento-retorno-arn}")
+    private String topicoPagamentoRetornoArn;
+
     private final CobrancaJpaRepository cobrancaJpaRepository;
     private final CobrancaMapper cobrancaMapper;
+    private final PublicaPagamentoRetornoInputPort publicaPagamentoRetornoInputPort;
 
-    public CobrancaRepository(CobrancaJpaRepository cobrancaJpaRepository, CobrancaMapper cobrancaMapper) {
+    public CobrancaRepository(CobrancaJpaRepository cobrancaJpaRepository, CobrancaMapper cobrancaMapper,
+                              PublicaPagamentoRetornoInputPort publicaPagamentoRetornoInputPort) {
         this.cobrancaJpaRepository = cobrancaJpaRepository;
         this.cobrancaMapper = cobrancaMapper;
+        this.publicaPagamentoRetornoInputPort = publicaPagamentoRetornoInputPort;
     }
     @Override
     public CobrancaDTO criar(CobrancaDTO cobrancaDTO) {
@@ -51,6 +61,14 @@ public class CobrancaRepository implements CriaCobrancaOutputPort, BuscaCobranca
         var cobranca = buscaCobrancaPorId(id);
         cobranca.setStatus(cobrancaStatusIn.status());
         var cobrancaSalva = cobrancaJpaRepository.save(cobranca);
+
+        var statusPedidoEnum = StatusPedidoEnum.getStatusPedido(cobrancaStatusIn.status());
+        var mensagem = new MensagemPagamentoPedidoDTO(
+                cobrancaSalva.getPedidoId(),
+                statusPedidoEnum
+        );
+        publicaPagamentoRetornoInputPort.publicar(mensagem, topicoPagamentoRetornoArn);
+
         return cobrancaMapper.toCobrancaOut(cobrancaSalva);
     }
 

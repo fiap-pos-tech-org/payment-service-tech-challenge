@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.servicocobranca.config;
 
-import br.com.fiap.techchallenge.servicocobranca.adapters.gateways.pagamentos.mercadopago.PagamentoMock;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.*;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.*;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.pedido.AtualizaStatusPedidoOutputPort;
@@ -12,11 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CoreInjectionConfig {
-
-    @Bean
-    CriaQrCodeOutputPort criaQrCodeInputPort() {
-        return new PagamentoMock();
-    }
 
     @Bean
     BuscaCobrancaPorIdInputPort buscaCobrancaPorId(BuscaCobrancaOutputPort buscaCobrancaOutputPort) {
@@ -31,15 +25,15 @@ public class CoreInjectionConfig {
     @Bean
     CriaCobrancaInputPort criarCobranca(
             CriaCobrancaOutputPort criaCobrancaOutputPort,
-            CriaQrCodeOutputPort criaQrCodeOutputPort,
             BuscarPedidoPorIdOutputPort buscarPedidoPorIdOutputPort,
-            BuscaCobrancaOutputPort buscaCobrancaOutputPort
+            BuscaCobrancaOutputPort buscaCobrancaOutputPort,
+            CriaCobrancaMercadoPagoOutputPort criaCobrancaMercadoPagoOutputPort
     ) {
         return new CriaCobrancaUseCase(
                 criaCobrancaOutputPort,
-                criaQrCodeOutputPort,
                 buscarPedidoPorIdOutputPort,
-                buscaCobrancaOutputPort
+                buscaCobrancaOutputPort,
+                criaCobrancaMercadoPagoOutputPort
         );
     }
 
@@ -59,6 +53,11 @@ public class CoreInjectionConfig {
     @Bean
     BuscaStatusPagamentoInputPort buscaStatusPagamento(BuscaStatusPagamentoOutputPort buscaStatusPagamentoOutputPort) {
         return new BuscaStatusPagamentoUseCase(buscaStatusPagamentoOutputPort);
+    }
+
+    @Bean
+    PublicaPagamentoRetornoInputPort publicaPagamentoRetornoInputPort(PublicaPagamentoRetornoOutputPort publicaPagamentoRetornoOutputPort) {
+        return new PublicaPagamentoRetornoUseCase(publicaPagamentoRetornoOutputPort);
     }
 
     @Bean

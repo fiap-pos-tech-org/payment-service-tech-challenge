@@ -12,7 +12,7 @@ public class CobrancaMapper {
                 cobrancaOut.pedidoId(),
                 cobrancaOut.status(),
                 cobrancaOut.valor(),
-                cobrancaOut.qrCode()
+                cobrancaOut.qrCodeBase64()
         );
     }
 }

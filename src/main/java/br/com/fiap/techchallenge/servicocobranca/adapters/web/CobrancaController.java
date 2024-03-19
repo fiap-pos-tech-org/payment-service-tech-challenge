@@ -2,19 +2,20 @@ package br.com.fiap.techchallenge.servicocobranca.adapters.web;
 
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.mappers.CobrancaMapper;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.AtualizaStatusCobrancaRequest;
-import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.CobrancaRequest;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.WebhookStatusCobrancaRequest;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.responses.CobrancaResponse;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.StatusPagamentoDTO;
-import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.*;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.AtualizaStatusCobrancaInputPort;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.BuscaCobrancaPorIdInputPort;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.BuscaCobrancaPorPedidoIdInputPort;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.BuscaStatusPagamentoInputPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +28,7 @@ import java.util.Arrays;
 @RequestMapping("/cobrancas")
 public class CobrancaController extends ControllerBase {
 
-    private final Logger logger = LoggerFactory.getLogger(CobrancaController.class);
-    private final CriaCobrancaInputPort criaCobrancaInputPort;
+    private final Logger logger = LogManager.getLogger(CobrancaController.class);
     private final BuscaCobrancaPorIdInputPort buscaCobrancaPorIdInputPort;
     private final AtualizaStatusCobrancaInputPort atualizaStatusCobrancaInputPort;
     private final CobrancaMapper cobrancaMapper;
@@ -36,29 +36,17 @@ public class CobrancaController extends ControllerBase {
     private final BuscaCobrancaPorPedidoIdInputPort buscaCobrancaPorPedidoIdInputPort;
 
     public CobrancaController(
-            CriaCobrancaInputPort criaCobrancaInputPort,
             BuscaCobrancaPorIdInputPort buscaCobrancaPorIdInputPort,
             AtualizaStatusCobrancaInputPort atualizaStatusCobrancaInputPort,
             CobrancaMapper cobrancaMapper,
             BuscaStatusPagamentoInputPort buscaStatusPagamentoInputPort,
             BuscaCobrancaPorPedidoIdInputPort buscaCobrancaPorPedidoIdInputPort
     ) {
-        this.criaCobrancaInputPort = criaCobrancaInputPort;
         this.buscaCobrancaPorIdInputPort = buscaCobrancaPorIdInputPort;
         this.atualizaStatusCobrancaInputPort = atualizaStatusCobrancaInputPort;
         this.cobrancaMapper = cobrancaMapper;
         this.buscaStatusPagamentoInputPort = buscaStatusPagamentoInputPort;
         this.buscaCobrancaPorPedidoIdInputPort = buscaCobrancaPorPedidoIdInputPort;
-    }
-
-    @Operation(summary = "Cria uma nova Cobrança")
-    @PostMapping
-    ResponseEntity<CobrancaResponse> criar(@Valid @RequestBody CobrancaRequest cobrancaRequest) {
-        var cobrancaOut = criaCobrancaInputPort.criar(cobrancaRequest.toCriaCobrancaDTO());
-        var cobrancaResponse = cobrancaMapper.toCobrancaResponse(cobrancaOut);
-        var uri = getExpandedCurrentUri("/{id}", cobrancaResponse.getId());
-
-        return ResponseEntity.created(uri).body(cobrancaResponse);
     }
 
     @Operation(summary = "Busca uma Cobrança por id")

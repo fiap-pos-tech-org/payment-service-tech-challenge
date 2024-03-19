@@ -1,12 +1,7 @@
 {
   "request" : {
-    "url" : "/api.mercadopago.com/v1/payments/123",
-    "method" : "GET",
-	"headers" : {
-		"Authorization" : {
-			"equalTo": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTU5ODMwOTM2NywiZXhwIjoxNTk4MzA5OTY3fQ.s2GCh1bZhi5vUap8xZmRlWDCW6m2mnaeUqdrxDZZfFcniQAReoQiw9tTBINTk1UL_poRakehXaDoFNRqrlrKrQ"
-		}
-	}
+    "urlPattern" : "/api.mercadopago.com/v1/payments/\\d+",
+    "method" : "GET"
   },
   "response" : {
     "status" : 200, 

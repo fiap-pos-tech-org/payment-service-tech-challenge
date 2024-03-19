@@ -11,6 +11,7 @@ import br.com.fiap.techchallenge.servicocobranca.core.domain.exceptions.EntityNo
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.AtualizaStatusCobrancaDTO;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.CobrancaDTO;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.PedidoDTO;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.PublicaPagamentoRetornoInputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.BuscaCobrancaOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.pedido.AtualizaStatusPedidoOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.utils.CobrancaHelper;
@@ -39,17 +40,14 @@ class AtualizaStatusCobrancaUseCaseTest {
     private BuscaCobrancaOutputPort buscaCobrancaOutputPort;
     @Mock
     private AtualizaStatusPedidoOutputPort atualizaStatusPedidoOutputPort;
-    //    @Mock
+    @Mock
+    private PublicaPagamentoRetornoInputPort publicaPagamentoRetornoInputPort;
     private CobrancaMapper cobrancaMapper = new CobrancaMapper();
-    //    @InjectMocks
     private CobrancaRepository cobrancaRepository;
     private AtualizaStatusCobrancaUseCase cobrancaUseCase;
     private CobrancaDTO cobrancaDTO;
     private Cobranca cobrancaSalva;
-    private Cobranca cobrancaAtualizada;
     private AtualizaStatusCobrancaDTO atualizaStatusCobranca;
-    private final Long ID = 2L;
-    private final Long NOT_FOUND_ID = 2000L;
 
     AutoCloseable openMocks;
 
@@ -57,7 +55,7 @@ class AtualizaStatusCobrancaUseCaseTest {
     void setup() {
         openMocks = MockitoAnnotations.openMocks(this);
 
-        cobrancaRepository = new CobrancaRepository(cobrancaJpaRepository, cobrancaMapper);
+        cobrancaRepository = new CobrancaRepository(cobrancaJpaRepository, cobrancaMapper, publicaPagamentoRetornoInputPort);
         cobrancaUseCase = new AtualizaStatusCobrancaUseCase(
                 cobrancaRepository,
                 cobrancaRepository,

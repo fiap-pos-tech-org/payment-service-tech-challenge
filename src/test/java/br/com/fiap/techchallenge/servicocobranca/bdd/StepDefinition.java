@@ -71,34 +71,9 @@ public class StepDefinition {
                 .get("/cobrancas/{id}/pedido", pedidoResponse.getId());
     }
 
-    @Quando("preencher todos os dados para cadastro da cobrança")
-    public CobrancaResponse preencherTodosDadosParaCadastrarCobranca() {
-        var cobrancaRequest = CobrancaHelper.criarCobrancaRequest(pedidoResponse.getId());
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(cobrancaRequest)
-                .when()
-                .post("/cobrancas");
-        return response.then()
-                .extract()
-                .as(CobrancaResponse.class);
-    }
-
-    @Então("a cobrança deve ser criada com sucesso")
-    public void cobrancaDeveSerCriadaComSucesso() {
-        response.then()
-                .statusCode(HttpStatus.CREATED.value());
-    }
-
-    @Então("deve exibir a cobrança cadastrada")
-    public void deveExibirCobrancaCadastrada() {
-        response.then()
-                .body(matchesJsonSchemaInClasspath("./schemas/CobrancaResponseSchema.json"));
-    }
-
     @Dado("que uma cobrança já está cadastrada")
     public void cobrancaJaCadastrada() {
-        cobrancaResponse = preencherTodosDadosParaCadastrarCobranca();
+        cobrancaResponse = CobrancaHelper.criaCobrancaResponse();
     }
 
     @Quando("realizar a busca da cobrança")

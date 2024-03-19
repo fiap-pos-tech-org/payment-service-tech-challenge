@@ -1,4 +1,5 @@
 package br.com.fiap.techchallenge.servicocobranca.core.domain.entities;
+
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
 
 import java.math.BigDecimal;
@@ -9,20 +10,20 @@ public class Cobranca {
     private Long pedidoId;
     private StatusCobrancaEnum status;
     private BigDecimal valor;
-    private QrCode qrCode;
+    private String qrCodeBase64;
 
-    public Cobranca(Long pedidoId, StatusCobrancaEnum status, BigDecimal valor, QrCode qrCode) {
+    public Cobranca(Long pedidoId, StatusCobrancaEnum status, BigDecimal valor, String qrCodeBase64) {
         this.pedidoId = pedidoId;
         this.status = status;
-        this.qrCode = qrCode;
+        this.qrCodeBase64 = qrCodeBase64;
         this.valor = valor;
     }
 
-    public Cobranca(Long id, Long pedidoId, StatusCobrancaEnum status, BigDecimal valor, QrCode qrCode) {
+    public Cobranca(Long id, Long pedidoId, StatusCobrancaEnum status, BigDecimal valor, String qrCodeBase64) {
         this.id = id;
         this.pedidoId = pedidoId;
         this.status = status;
-        this.qrCode = qrCode;
+        this.qrCodeBase64 = qrCodeBase64;
         this.valor = valor;
     }
 
@@ -42,7 +43,7 @@ public class Cobranca {
         return valor;
     }
 
-    public QrCode getQrCode() {
-        return qrCode;
+    public String getQrCodeBase64() {
+        return qrCodeBase64;
     }
 }

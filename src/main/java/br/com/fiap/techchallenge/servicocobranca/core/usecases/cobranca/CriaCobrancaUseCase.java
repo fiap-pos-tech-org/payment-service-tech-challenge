@@ -1,31 +1,31 @@
 package br.com.fiap.techchallenge.servicocobranca.core.usecases.cobranca;
 
-import br.com.fiap.techchallenge.servicocobranca.core.domain.exceptions.EntityAlreadyExistException;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.Cobranca;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
-import br.com.fiap.techchallenge.servicocobranca.core.dtos.CriaCobrancaDTO;
+import br.com.fiap.techchallenge.servicocobranca.core.domain.exceptions.EntityAlreadyExistException;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.CobrancaDTO;
+import br.com.fiap.techchallenge.servicocobranca.core.dtos.CriaCobrancaDTO;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.CriaCobrancaInputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.BuscaCobrancaOutputPort;
-import br.com.fiap.techchallenge.servicocobranca.core.ports.out.pedido.BuscarPedidoPorIdOutputPort;
-import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.CriaQrCodeOutputPort;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.CriaCobrancaMercadoPagoOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.CriaCobrancaOutputPort;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.out.pedido.BuscarPedidoPorIdOutputPort;
 
 public class CriaCobrancaUseCase implements CriaCobrancaInputPort {
 
     private final CriaCobrancaOutputPort cobrancaOutputPort;
-    private final CriaQrCodeOutputPort criaQrCodeOutputPort;
     private final BuscarPedidoPorIdOutputPort buscarPedidoPorIdOutputPort;
     private final BuscaCobrancaOutputPort buscaCobrancaOutputPort;
+    private final CriaCobrancaMercadoPagoOutputPort criaCobrancaMercadoPagoOutputPort;
 
     public CriaCobrancaUseCase(CriaCobrancaOutputPort cobrancaOutputPort,
-                               CriaQrCodeOutputPort criaQrCodeOutputPort,
                                BuscarPedidoPorIdOutputPort buscarPedidoPorIdOutputPort,
-                               BuscaCobrancaOutputPort buscaCobrancaOutputPort) {
+                               BuscaCobrancaOutputPort buscaCobrancaOutputPort,
+                               CriaCobrancaMercadoPagoOutputPort criaCobrancaMercadoPagoOutputPort) {
         this.cobrancaOutputPort = cobrancaOutputPort;
-        this.criaQrCodeOutputPort = criaQrCodeOutputPort;
         this.buscarPedidoPorIdOutputPort = buscarPedidoPorIdOutputPort;
         this.buscaCobrancaOutputPort = buscaCobrancaOutputPort;
+        this.criaCobrancaMercadoPagoOutputPort = criaCobrancaMercadoPagoOutputPort;
     }
 
     public CobrancaDTO criar(CriaCobrancaDTO cobrancaIn) {
@@ -33,9 +33,9 @@ public class CriaCobrancaUseCase implements CriaCobrancaInputPort {
 
         validaExisteCobranca(pedidoOut.id());
 
-        var qrCode = criaQrCodeOutputPort.criar(cobrancaIn.pedidoId(), pedidoOut.valorTotal());
+        var mercadoPagoDTO = criaCobrancaMercadoPagoOutputPort.criar(cobrancaIn.pedidoId());
         var cobranca = new Cobranca(
-                cobrancaIn.pedidoId(), StatusCobrancaEnum.PENDENTE, pedidoOut.valorTotal(), qrCode
+                cobrancaIn.pedidoId(), StatusCobrancaEnum.PENDENTE, pedidoOut.valorTotal(), mercadoPagoDTO.qrCodeBase64()
         );
         return cobrancaOutputPort.criar(new CobrancaDTO(cobranca));
     }

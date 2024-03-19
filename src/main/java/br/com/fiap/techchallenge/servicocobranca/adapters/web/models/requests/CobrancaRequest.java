@@ -24,7 +24,4 @@ public class CobrancaRequest {
         this.pedidoId = pedidoId;
     }
 
-    public CriaCobrancaDTO toCriaCobrancaDTO() {
-        return new CriaCobrancaDTO(pedidoId);
-    }
 }

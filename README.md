@@ -107,6 +107,10 @@ Além disso, a utilização do padrão Saga Coreografada entre os diferentes mic
 
 Portanto, ao adotar o padrão Saga Coreografada em todos os microserviços da lanchonete, temos uma arquitetura resiliente e flexível, capaz de lidar com transações distribuídas de maneira eficiente e confiável em todo o ecossistema da lanchonete.
 
+## Desenho de arquitetura utilizando o Padrão Saga Coreografada
+
+![lanchonete_diagrama_saga_coreografada_v2.png](lanchonete_diagrama_saga_coreografada_v2.png)
+
 ## Contribuidores
 - [pedroprj](https://github.com/pedroprj) - Pedro Pereira dos Reis Júnior - pedrojr9119@gmail.com - RM 350295
 - [diego-jo](https://github.com/diego-jo) - Diego José Oliveira - oliveiraj.diego@gmail.com - RM 350296

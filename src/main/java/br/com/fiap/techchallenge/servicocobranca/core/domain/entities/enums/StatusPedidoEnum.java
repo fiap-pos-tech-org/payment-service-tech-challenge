@@ -10,7 +10,8 @@ public enum StatusPedidoEnum {
     EM_PREPARACAO("Em preparação"),
     PRONTO("Pronto"),
     FINALIZADO("Finalizado"),
-    CANCELADO ("Cancelado");
+    CANCELADO ("Cancelado"),
+    RECUSADO ("Recusado");
 
     private final String descricao;
 
@@ -28,6 +29,15 @@ public enum StatusPedidoEnum {
                 .filter(status -> status.name().equalsIgnoreCase(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Status permitidos: " + Stream.of(values()).toList()));
+    }
+
+    public static StatusPedidoEnum getStatusPedido(StatusCobrancaEnum statusCobranca) {
+        return switch(statusCobranca) {
+            case PAGO -> StatusPedidoEnum.RECEBIDO;
+            case CANCELADO -> StatusPedidoEnum.CANCELADO;
+            case RECUSADO -> StatusPedidoEnum.RECUSADO;
+            default -> null;
+        };
     }
 
 }

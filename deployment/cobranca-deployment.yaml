@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: servico-cobranca
-          image: vwnunes/tech-challenge-61:latest
+          image: geter/cobranca-techchallenge38:latest
           imagePullPolicy: "Always"
           ports:
             - containerPort: 8080
@@ -24,6 +24,12 @@ spec:
               value: ${DB_USERNAME}
             - name: DB_PASS
               value: ${DB_PASSWORD}
+            - name: TOPICO_PAGAMENTO_RETORNO_ARN
+              value: ${TOPICO_PAGAMENTO_RETORNO_ARN}
+            - name: FILA_PAGAMENTO_PENDENTE
+              value: ${FILA_PAGAMENTO_PENDENTE}
+            - name: ENV
+              value: ${ENV}
           volumeMounts:
             - mountPath: /servico-cobranca-volume
               name: servico-cobranca-volume
@@ -32,6 +38,7 @@ spec:
           hostPath:
             path: /home/servico-cobranca-volume
             type: DirectoryOrCreate
+      serviceAccountName: cobranca-serviceaccount
   replicas: 2
   selector:
     matchLabels:

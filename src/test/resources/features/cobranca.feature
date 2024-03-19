@@ -2,14 +2,6 @@
 
 Funcionalidade: Cobrança
 
-  Cenário: Criar uma nova cobrança
-    Dado que um cliente já está cadastrado
-    E que um produto já está cadastrado
-    E que um pedido já está cadastrado
-    Quando preencher todos os dados para cadastro da cobrança
-    Então a cobrança deve ser criada com sucesso
-    E deve exibir a cobrança cadastrada
-
   Cenário: Buscar uma cobrança
     Dado que um cliente já está cadastrado
     E que um produto já está cadastrado

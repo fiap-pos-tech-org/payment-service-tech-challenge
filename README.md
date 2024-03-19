@@ -19,7 +19,7 @@ Antes de executar o projeto, verifique se você possui os seguintes requisitos:
 
 ## Imagem Docker do projeto
 
-Podemos encontrar a imagem do projeto no seguinte repositório do Docker hub [vwnunes/tech-challenge-61](https://hub.docker.com/repository/docker/vwnunes/tech-challenge-61/general)
+Podemos encontrar a imagem do projeto no seguinte repositório do Docker hub [geter/cobranca-techchallenge38](https://hub.docker.com/repository/docker/geter/techchallenge38/general)
 
 ## Executando o Projeto
 
@@ -99,6 +99,13 @@ Siga as instruções abaixo para executar o projeto via docker/docker-compose:
         docker compose -f docker-compose-local.yml up -d
         mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=sonar
     ```
+
+## Padrão Saga Coreografada
+O padrão Saga Coreografada foi adotado não apenas no microserviço de pagamento de pedidos da lanchonete, mas também em outros serviços como pedido e produção. Essa escolha foi feita para garantir uma abordagem consistente e coerente na coordenação de transações distribuídas em todo o sistema da lanchonete, garantindo a consistência e a integridade dos dados em um ambiente distribuído.
+
+Além disso, a utilização do padrão Saga Coreografada entre os diferentes microserviços permite uma comunicação eficiente e assíncrona entre eles, reduzindo a complexidade e melhorando a escalabilidade do sistema como um todo. Isso facilita a manutenção e evolução contínua do sistema, uma vez que cada microserviço pode ser desenvolvido, testado e implantado de forma independente.
+
+Portanto, ao adotar o padrão Saga Coreografada em todos os microserviços da lanchonete, temos uma arquitetura resiliente e flexível, capaz de lidar com transações distribuídas de maneira eficiente e confiável em todo o ecossistema da lanchonete.
 
 ## Contribuidores
 - [pedroprj](https://github.com/pedroprj) - Pedro Pereira dos Reis Júnior - pedrojr9119@gmail.com - RM 350295

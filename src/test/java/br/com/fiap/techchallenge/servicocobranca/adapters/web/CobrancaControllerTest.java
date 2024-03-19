@@ -3,12 +3,13 @@ package br.com.fiap.techchallenge.servicocobranca.adapters.web;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.handlers.ExceptionsHandler;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.mappers.CobrancaMapper;
 import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.AtualizaStatusCobrancaRequest;
-import br.com.fiap.techchallenge.servicocobranca.adapters.web.models.requests.CobrancaRequest;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.exceptions.EntityNotFoundException;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.CobrancaDTO;
-import br.com.fiap.techchallenge.servicocobranca.core.dtos.CriaCobrancaDTO;
-import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.*;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.AtualizaStatusCobrancaInputPort;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.BuscaCobrancaPorIdInputPort;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.BuscaCobrancaPorPedidoIdInputPort;
+import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.BuscaStatusPagamentoInputPort;
 import br.com.fiap.techchallenge.servicocobranca.utils.CobrancaHelper;
 import br.com.fiap.techchallenge.servicocobranca.utils.ObjectParaJsonMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,15 +21,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class CobrancaControllerTest {
 
     private MockMvc mockMvc;
-    @Mock
-    private CriaCobrancaInputPort criaCobrancaInputPort;
     @Mock
     private BuscaCobrancaPorIdInputPort buscaCobrancaPorIdInputPort;
     @Mock
@@ -47,7 +47,6 @@ class CobrancaControllerTest {
     void setup() {
         openMocks = MockitoAnnotations.openMocks(this);
         var cobrancaController = new CobrancaController(
-                criaCobrancaInputPort,
                 buscaCobrancaPorIdInputPort,
                 atualizaStatusCobrancaInputPort,
                 cobrancaMapper,
@@ -65,42 +64,6 @@ class CobrancaControllerTest {
     @AfterEach
     void tearDown() throws Exception {
         openMocks.close();
-    }
-
-
-    @Nested
-    @DisplayName("Cadastra uma cobranca")
-    class CadastraCobranca {
-        @Test
-        @DisplayName("Deve cadastrar uma cobrança quando os dados forem informados corretamente")
-        void deveCadastrarUmaCobranca_QuandoOsDadosForemInformadosCorretamente() throws Exception {
-            //Arrange
-            when(criaCobrancaInputPort.criar(any(CriaCobrancaDTO.class))).thenReturn(CobrancaHelper.criaCobrancaDTO());
-            when(cobrancaMapper.toCobrancaResponse(any())).thenReturn(CobrancaHelper.criaCobrancaResponse());
-
-            //Act
-            //Assert
-            mockMvc.perform(post("/cobrancas")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(ObjectParaJsonMapper.converte(CobrancaHelper.criaCobrancaRequest())))
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.status").value("PENDENTE"));
-
-        }
-
-        @Test
-        @DisplayName("Deve retornar BadRequest quando o id do pedido não for informado")
-        void deveRetornarBadRequest_QuandoPedidoIdNaoForInformado() throws Exception {
-            //Arrange
-            //Act
-            //Assert
-            mockMvc.perform(post("/cobrancas")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(ObjectParaJsonMapper.converte(new CobrancaRequest(null))))
-                    .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.message").value("O campo pedidoId é obrigatório"));
-
-        }
     }
 
     @Nested

@@ -9,8 +9,8 @@ RUN mkdir /app
 RUN apt-get update && apt-get install -y dumb-init
 COPY --from=build /app/target/payment-service-tech-challenge-*.jar /app/java-application.jar
 WORKDIR /app
-RUN addgroup --system payment-service-tech-challenge-app && useradd -r payment-service-tech-challenge-app -g payment-service-tech-challenge-app
-RUN chown -R payment-service-tech-challenge-app:payment-service-tech-challenge-app /app
-USER payment-service-tech-challenge-app
+RUN addgroup --system payment-svc-tech-challenge-app && useradd -r payment-svc-tech-challenge-app -g payment-svc-tech-challenge-app
+RUN chown -R payment-svc-tech-challenge-app:payment-svc-tech-challenge-app /app
+USER payment-svc-tech-challenge-app
 EXPOSE 8080
 CMD "dumb-init" "java" "-jar" "java-application.jar"

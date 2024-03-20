@@ -114,3 +114,4 @@ Portanto, ao adotar o padrão Saga Coreografada em todos os microserviços da la
 ## Contribuidores
 - [pedroprj](https://github.com/pedroprj) - Pedro Pereira dos Reis Júnior - pedrojr9119@gmail.com - RM 350295
 - [diego-jo](https://github.com/diego-jo) - Diego José Oliveira - oliveiraj.diego@gmail.com - RM 350296
+  .

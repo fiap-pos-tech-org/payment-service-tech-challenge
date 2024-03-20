@@ -39,7 +39,7 @@ spec:
             path: /home/servico-cobranca-volume
             type: DirectoryOrCreate
       serviceAccountName: cobranca-serviceaccount
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: servico-cobranca

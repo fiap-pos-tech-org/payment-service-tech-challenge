@@ -5,17 +5,13 @@ import br.com.fiap.techchallenge.servicocobranca.adapters.repository.jpa.Cobranc
 import br.com.fiap.techchallenge.servicocobranca.adapters.repository.mappers.CobrancaMapper;
 import br.com.fiap.techchallenge.servicocobranca.adapters.repository.models.Cobranca;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusCobrancaEnum;
-import br.com.fiap.techchallenge.servicocobranca.core.domain.entities.enums.StatusPedidoEnum;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.exceptions.BadRequestException;
 import br.com.fiap.techchallenge.servicocobranca.core.domain.exceptions.EntityNotFoundException;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.AtualizaStatusCobrancaDTO;
 import br.com.fiap.techchallenge.servicocobranca.core.dtos.CobrancaDTO;
-import br.com.fiap.techchallenge.servicocobranca.core.dtos.PedidoDTO;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.PublicaPagamentoRetornoInputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.BuscaCobrancaOutputPort;
-import br.com.fiap.techchallenge.servicocobranca.core.ports.out.pedido.AtualizaStatusPedidoOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.utils.CobrancaHelper;
-import br.com.fiap.techchallenge.servicocobranca.utils.PedidoHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,8 +35,6 @@ class AtualizaStatusCobrancaUseCaseTest {
     @Mock
     private BuscaCobrancaOutputPort buscaCobrancaOutputPort;
     @Mock
-    private AtualizaStatusPedidoOutputPort atualizaStatusPedidoOutputPort;
-    @Mock
     private PublicaPagamentoRetornoInputPort publicaPagamentoRetornoInputPort;
     private CobrancaMapper cobrancaMapper = new CobrancaMapper();
     private CobrancaRepository cobrancaRepository;
@@ -58,8 +52,7 @@ class AtualizaStatusCobrancaUseCaseTest {
         cobrancaRepository = new CobrancaRepository(cobrancaJpaRepository, cobrancaMapper, publicaPagamentoRetornoInputPort);
         cobrancaUseCase = new AtualizaStatusCobrancaUseCase(
                 cobrancaRepository,
-                cobrancaRepository,
-                atualizaStatusPedidoOutputPort
+                cobrancaRepository
         );
 
         cobrancaSalva = CobrancaHelper.criaCobranca();
@@ -77,9 +70,7 @@ class AtualizaStatusCobrancaUseCaseTest {
     void deveAtualizarStatusCobranca_QuandoDadosInformadosCorretamente() {
         //Arrange
         Long id = 1L;
-        PedidoDTO pedidoDTO = PedidoHelper.criaPedidoDTO();
 
-        when(atualizaStatusPedidoOutputPort.atualizarStatus(cobrancaDTO.id(), StatusPedidoEnum.CANCELADO)).thenReturn(pedidoDTO);
         when(cobrancaJpaRepository.findById(anyLong())).thenReturn(Optional.of(cobrancaSalva));
         when(cobrancaJpaRepository.save(any(Cobranca.class))).thenReturn(cobrancaSalva);
 
@@ -89,7 +80,6 @@ class AtualizaStatusCobrancaUseCaseTest {
         //Assert
         assertThat(cobrancaDtoAtualizada).isNotNull();
         assertThat(cobrancaDtoAtualizada.status()).isEqualTo(StatusCobrancaEnum.RECUSADO);
-        verify(atualizaStatusPedidoOutputPort, times(0)).atualizarStatus(anyLong(), any(StatusPedidoEnum.class));
         verify(cobrancaJpaRepository, times(2)).findById(anyLong());
         verify(cobrancaJpaRepository, times(1)).save(any(Cobranca.class));
     }
@@ -99,10 +89,8 @@ class AtualizaStatusCobrancaUseCaseTest {
     void deveAtualizarStatusCobranca_QuandoDadosInformadosCorretamente2() {
         //Arrange
         Long id = 1L;
-        PedidoDTO pedidoDTO = PedidoHelper.criaPedidoDTO();
         var atualizaStatusCobranca = new AtualizaStatusCobrancaDTO(StatusCobrancaEnum.PAGO);
 
-        when(atualizaStatusPedidoOutputPort.atualizarStatus(cobrancaDTO.id(), StatusPedidoEnum.RECEBIDO)).thenReturn(pedidoDTO);
         when(cobrancaJpaRepository.findById(anyLong())).thenReturn(Optional.of(cobrancaSalva));
         when(cobrancaJpaRepository.save(any(Cobranca.class))).thenReturn(cobrancaSalva);
 
@@ -112,7 +100,6 @@ class AtualizaStatusCobrancaUseCaseTest {
         //Assert
         assertThat(cobrancaDtoAtualizada).isNotNull();
         assertThat(cobrancaDtoAtualizada.status()).isEqualTo(StatusCobrancaEnum.PAGO);
-        verify(atualizaStatusPedidoOutputPort, times(0)).atualizarStatus(anyLong(), any(StatusPedidoEnum.class));
         verify(cobrancaJpaRepository, times(2)).findById(anyLong());
         verify(cobrancaJpaRepository, times(1)).save(any(Cobranca.class));
     }

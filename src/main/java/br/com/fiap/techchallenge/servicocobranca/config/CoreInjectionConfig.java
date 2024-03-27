@@ -2,7 +2,6 @@ package br.com.fiap.techchallenge.servicocobranca.config;
 
 import br.com.fiap.techchallenge.servicocobranca.core.ports.in.cobranca.*;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.cobranca.*;
-import br.com.fiap.techchallenge.servicocobranca.core.ports.out.pedido.AtualizaStatusPedidoOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.ports.out.pedido.BuscarPedidoPorIdOutputPort;
 import br.com.fiap.techchallenge.servicocobranca.core.usecases.cobranca.*;
 import com.squareup.okhttp.OkHttpClient;
@@ -38,15 +37,13 @@ public class CoreInjectionConfig {
     }
 
     @Bean
-    AtualizaStatusCobrancaInputPort atualiStatusCobranca(
+    AtualizaStatusCobrancaInputPort atualizaStatusCobranca(
             AtualizaStatusCobrancaOutputPort atualizaStatusCobrancaOutputPort,
-            BuscaCobrancaOutputPort buscaCobrancaOutputPort,
-            AtualizaStatusPedidoOutputPort atualizaStatusPedidoOutputPort
+            BuscaCobrancaOutputPort buscaCobrancaOutputPort
     ) {
         return new AtualizaStatusCobrancaUseCase(
                 buscaCobrancaOutputPort,
-                atualizaStatusCobrancaOutputPort,
-                atualizaStatusPedidoOutputPort
+                atualizaStatusCobrancaOutputPort
         );
     }
 

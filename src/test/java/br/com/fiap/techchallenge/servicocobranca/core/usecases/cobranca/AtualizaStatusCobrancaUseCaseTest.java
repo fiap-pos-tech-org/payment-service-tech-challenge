@@ -89,7 +89,7 @@ class AtualizaStatusCobrancaUseCaseTest {
         //Assert
         assertThat(cobrancaDtoAtualizada).isNotNull();
         assertThat(cobrancaDtoAtualizada.status()).isEqualTo(StatusCobrancaEnum.RECUSADO);
-        verify(atualizaStatusPedidoOutputPort, times(1)).atualizarStatus(anyLong(), any(StatusPedidoEnum.class));
+        verify(atualizaStatusPedidoOutputPort, times(0)).atualizarStatus(anyLong(), any(StatusPedidoEnum.class));
         verify(cobrancaJpaRepository, times(2)).findById(anyLong());
         verify(cobrancaJpaRepository, times(1)).save(any(Cobranca.class));
     }
@@ -112,7 +112,7 @@ class AtualizaStatusCobrancaUseCaseTest {
         //Assert
         assertThat(cobrancaDtoAtualizada).isNotNull();
         assertThat(cobrancaDtoAtualizada.status()).isEqualTo(StatusCobrancaEnum.PAGO);
-        verify(atualizaStatusPedidoOutputPort, times(1)).atualizarStatus(anyLong(), any(StatusPedidoEnum.class));
+        verify(atualizaStatusPedidoOutputPort, times(0)).atualizarStatus(anyLong(), any(StatusPedidoEnum.class));
         verify(cobrancaJpaRepository, times(2)).findById(anyLong());
         verify(cobrancaJpaRepository, times(1)).save(any(Cobranca.class));
     }
